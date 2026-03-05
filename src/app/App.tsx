@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
@@ -18,23 +17,7 @@ import { RequireAuth } from './components/RequireAuth'
 
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const categoryParam = searchParams.get('category') || 'All'
-
-  const [activeCategory, setActiveCategory] = useState(categoryParam)
-
-  // keep state synced with URL
-  useEffect(() => {
-    setActiveCategory(categoryParam)
-  }, [categoryParam])
-
-  const handleCategoryChange = (cat: string) => {
-    setActiveCategory(cat)
-    if (cat === 'All') {
-      setSearchParams({})
-    } else {
-      setSearchParams({ category: cat })
-    }
-  }
+  const activeCategory = searchParams.get('category') || 'All'
 
   const filteredProducts =
     activeCategory === 'All'
@@ -44,7 +27,7 @@ function Home() {
   return (
     <>
       <Hero />
-      <CategoryBar active={activeCategory} onChange={handleCategoryChange} />
+      <CategoryBar active={activeCategory} />
       <ProductGrid products={filteredProducts} />
     </>
   )

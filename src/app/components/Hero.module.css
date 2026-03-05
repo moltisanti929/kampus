@@ -10,7 +10,9 @@
   background-image:
     radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
     radial-gradient(circle at 80% 20%, rgba(240, 180, 41, 0.08) 0%, transparent 50%);
+  pointer-events: none;
 }
+
 
 .pattern {
   position: absolute;
@@ -21,6 +23,7 @@
       transparent 0,
       transparent 50%);
   background-size: 32px 32px;
+  pointer-events: none;
 }
 
 .inner {
