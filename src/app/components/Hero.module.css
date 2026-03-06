@@ -3,9 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 32px 0;
+  padding: 0;
   overflow: hidden;
-  min-height: 180px;
+  min-height: 0;
 }
 
 .hero::before {
