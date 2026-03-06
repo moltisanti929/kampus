@@ -1,29 +1,54 @@
 .hero {
-  background: url(../assets/KAMPUS_BANNER.png) no-repeat center center;
-  background-size: cover;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 0;
+  overflow: hidden;
+  min-height: 180px;
 }
 
 .hero::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 60%),
-    radial-gradient(circle at 80% 20%, rgba(240, 180, 41, 0.08) 0%, transparent 50%);
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(255, 255, 255, 0.04) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(240, 180, 41, 0.08) 0%,
+      transparent 50%
+    );
   pointer-events: none;
 }
-
 
 .pattern {
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(45deg,
-      rgba(255, 255, 255, 0.015) 0,
-      rgba(255, 255, 255, 0.015) 1px,
-      transparent 0,
-      transparent 50%);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.015) 0,
+    rgba(255, 255, 255, 0.015) 1px,
+    transparent 0,
+    transparent 50%
+  );
   background-size: 32px 32px;
   pointer-events: none;
+}
+
+.banner {
+  display: block;
+  height: auto;
+  /* make the image full-bleed so there are no visible side borders */
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  object-fit: cover;
 }
 
 .inner {
