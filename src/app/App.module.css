@@ -1,45 +1,45 @@
 .homeActionsWrap {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 16px clamp(16px, 4vw, 48px) 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 16px clamp(16px, 4vw, 48px) 0;
 }
 
 .homeActions {
-  display: flex;
-  justify-content: flex-end;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .messagesLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-pill);
-  padding: 9px 16px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--navy);
-  background: var(--blue-light);
-  border: 1px solid rgba(26, 47, 110, 0.12);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-  text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    padding: 9px 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--navy);
+    background: var(--blue-light);
+    border: 1px solid rgba(26, 47, 110, 0.12);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    text-decoration: none;
 }
 
 .messagesLink:hover {
-  transform: translateY(-1px);
-  background: #dbe8ff;
-  box-shadow: 0 6px 16px rgba(26, 47, 110, 0.12);
+    transform: translateY(-1px);
+    background: #dbe8ff;
+    box-shadow: 0 6px 16px rgba(26, 47, 110, 0.12);
 }
 
 @media (max-width: 640px) {
-  .homeActionsWrap {
-    padding-top: 12px;
-  }
+    .homeActionsWrap {
+        padding-top: 12px;
+    }
 
-  .homeActions {
-    justify-content: stretch;
-  }
+    .homeActions {
+        justify-content: stretch;
+    }
 
-  .messagesLink {
-    width: 100%;
-  }
+    .messagesLink {
+        width: 100%;
+    }
 }
