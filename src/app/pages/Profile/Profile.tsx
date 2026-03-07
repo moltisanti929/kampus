@@ -10,6 +10,14 @@ import styles from './Profile.module.css'
 
 const WALLET_STORAGE_KEY = 'kampus_wallet_balances'
 
+const BOOST_PLANS = [
+  { id: '1d', label: '1 day', amount: 25 },
+  { id: '3d', label: '3 days', amount: 60 },
+  { id: '7d', label: '7 days', amount: 120 },
+] as const
+
+type BoostPlanId = (typeof BOOST_PLANS)[number]['id']
+
 interface MockAccount {
   email: string
   name: string
@@ -45,6 +53,10 @@ export default function Profile() {
   const [isTopUpOpen, setIsTopUpOpen] = useState(false)
   const [topUpAmount, setTopUpAmount] = useState('')
   const [topUpError, setTopUpError] = useState('')
+  const [isBoostOpen, setIsBoostOpen] = useState(false)
+  const [boostTarget, setBoostTarget] = useState<{ id: number; title: string } | null>(null)
+  const [selectedBoostPlan, setSelectedBoostPlan] = useState<BoostPlanId | ''>('')
+  const [boostError, setBoostError] = useState('')
   const { user } = useAuth()
   const navigate = useNavigate()
   const { profileKey } = useParams()
@@ -114,6 +126,35 @@ export default function Profile() {
     setTopUpError('')
     setIsTopUpOpen(false)
     setTopUpAmount('')
+    navigate(`/payment?${params.toString()}`)
+  }
+
+  const handleBoostPay = () => {
+    if (!boostTarget) return
+    if (!selectedBoostPlan) {
+      setBoostError('Please choose a boost plan.')
+      return
+    }
+
+    const selectedPlan = BOOST_PLANS.find((plan) => plan.id === selectedBoostPlan)
+    if (!selectedPlan) {
+      setBoostError('Please choose a valid boost plan.')
+      return
+    }
+
+    const params = new URLSearchParams({
+      mode: 'boost',
+      amount: String(selectedPlan.amount),
+      itemTitle: `Boost: ${boostTarget.title} (${selectedPlan.label})`,
+      seller: 'Kampus',
+      sellerId: 'kampus',
+      listingId: String(boostTarget.id),
+    })
+
+    setBoostError('')
+    setIsBoostOpen(false)
+    setSelectedBoostPlan('')
+    setBoostTarget(null)
     navigate(`/payment?${params.toString()}`)
   }
 
@@ -272,6 +313,13 @@ export default function Profile() {
                       style={{ animationDelay: `${i * 0.05}s` }}
                       selectable={selectMode}
                       selected={selected.includes(p.id)}
+                      showBoost={isOwnProfile && !selectMode}
+                      onBoostClick={() => {
+                        setBoostTarget({ id: p.id, title: p.title })
+                        setSelectedBoostPlan('')
+                        setBoostError('')
+                        setIsBoostOpen(true)
+                      }}
                       onSelect={() => {
                         if (selected.includes(p.id)) {
                           setSelected(prev => prev.filter(id => id !== p.id))
@@ -361,6 +409,70 @@ export default function Profile() {
                 Cancel
               </button>
               <button type="button" className={styles.payBtn} onClick={handleTopUpPay}>
+                Pay
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isBoostOpen && boostTarget && (
+        <div
+          className={styles.topUpOverlay}
+          onClick={() => {
+            setIsBoostOpen(false)
+            setBoostError('')
+          }}
+        >
+          <div className={styles.topUpModal} onClick={(event) => event.stopPropagation()}>
+            <div className={styles.topUpHeader}>
+              <h3>Boost posting</h3>
+              <button
+                type="button"
+                className={styles.topUpClose}
+                onClick={() => {
+                  setIsBoostOpen(false)
+                  setBoostError('')
+                }}
+                aria-label="Close boost modal"
+              >
+                <X size={14} />
+              </button>
+            </div>
+
+            <p className={styles.boostTarget}>{boostTarget.title}</p>
+
+            <div className={styles.planList}>
+              {BOOST_PLANS.map((plan) => (
+                <button
+                  key={plan.id}
+                  type="button"
+                  className={`${styles.planBtn} ${selectedBoostPlan === plan.id ? styles.planBtnActive : ''}`}
+                  onClick={() => {
+                    setSelectedBoostPlan(plan.id)
+                    if (boostError) setBoostError('')
+                  }}
+                >
+                  <span>{plan.label}</span>
+                  <strong>₱{plan.amount}</strong>
+                </button>
+              ))}
+            </div>
+
+            {boostError && <p className={styles.topUpError}>{boostError}</p>}
+
+            <div className={styles.topUpActions}>
+              <button
+                type="button"
+                className={styles.cancelBtn}
+                onClick={() => {
+                  setIsBoostOpen(false)
+                  setBoostError('')
+                }}
+              >
+                Cancel
+              </button>
+              <button type="button" className={styles.payBtn} onClick={handleBoostPay}>
                 Pay
               </button>
             </div>

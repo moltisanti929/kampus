@@ -41,23 +41,27 @@ const PAYMENT_METHODS: Array<{
 
 export default function Payment() {
     const [searchParams] = useSearchParams()
-    const isTopUpMode = searchParams.get('mode') === 'topup'
-    const backPath = isTopUpMode ? '/profile' : '/messages'
-    const backLabel = isTopUpMode ? 'Back to profile' : 'Back to messages'
-    const itemTitle = searchParams.get('itemTitle') || (isTopUpMode ? 'K-Wallet Top-up' : 'Listing')
-    const seller = isTopUpMode ? 'Kampus' : searchParams.get('seller') || 'Seller'
+    const mode = searchParams.get('mode')
+    const isTopUpMode = mode === 'topup'
+    const isBoostMode = mode === 'boost'
+    const requiresOnlineMethods = isTopUpMode || isBoostMode
+    const showBackButton = isTopUpMode
+    const itemTitle =
+        searchParams.get('itemTitle') ||
+        (isTopUpMode ? 'K-Wallet Top-up' : isBoostMode ? 'Listing boost' : 'Listing')
+    const seller = requiresOnlineMethods ? 'Kampus' : searchParams.get('seller') || 'Seller'
     const amountRaw = Number(searchParams.get('amount'))
     const amount = Number.isFinite(amountRaw) && amountRaw > 0 ? amountRaw : 0
 
     const availableMethods = useMemo(
         () =>
-            isTopUpMode
+            requiresOnlineMethods
                 ? PAYMENT_METHODS.filter((method) => method.id === 'card' || method.id === 'qrph')
                 : PAYMENT_METHODS,
-        [isTopUpMode]
+        [requiresOnlineMethods]
     )
 
-    const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(isTopUpMode ? 'card' : 'cash')
+    const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(requiresOnlineMethods ? 'card' : 'cash')
     const [cardType, setCardType] = useState('Visa')
     const [cardName, setCardName] = useState('')
     const [cardNumber, setCardNumber] = useState('')
@@ -79,12 +83,14 @@ export default function Payment() {
 
     return (
         <div className={styles.page}>
-            <div className={styles.topBar}>
-                <Link to={backPath} className={styles.backBtn}>
-                    <ArrowLeft size={16} />
-                    {backLabel}
-                </Link>
-            </div>
+            {showBackButton && (
+                <div className={styles.topBar}>
+                    <Link to="/profile" className={styles.backBtn}>
+                        <ArrowLeft size={16} />
+                        Back to profile
+                    </Link>
+                </div>
+            )}
 
             <section className={styles.card}>
                 <header className={styles.header}>

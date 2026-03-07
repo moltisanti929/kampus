@@ -175,3 +175,25 @@
   background: var(--navy-light);
   transform: scale(1.1);
 }
+
+.actionGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.boostActionBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #16a34a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.boostActionBtn:hover {
+  background: #15803d;
+  transform: scale(1.1);
+}

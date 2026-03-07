@@ -1,4 +1,4 @@
-import { Heart, ArrowRight } from 'lucide-react'
+import { Heart, ArrowRight, TrendingUp } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import type { Product } from '@/data/products'
 import styles from './ProductCard.module.css'
@@ -20,6 +20,8 @@ interface ProductCardProps {
   selectable?: boolean
   selected?: boolean
   onSelect?: () => void
+  showBoost?: boolean
+  onBoostClick?: (id: number) => void
 }
 
 const BADGE_CLASS: Record<string, string> = {
@@ -39,7 +41,7 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
   const navigate = useNavigate()
   const { id, title, price, image, category, seller, condition } = product
   // Destructure new props
-  const { selectable, selected, onSelect } = arguments[0]
+  const { selectable, selected, onSelect, showBoost, onBoostClick } = arguments[0]
 
   const cardClass = `${styles.card}${selected ? ' ' + styles.selected : ''}`
 
@@ -67,8 +69,24 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
           <p className={styles.seller}>by <span>{seller}</span></p>
           <div className={styles.footer}>
             <span className={styles.price}>{formatPrice(price)}</span>
-            <div className={styles.actionBtn} aria-label="View listing">
-              <ArrowRight size={14} color="white" strokeWidth={2.5} />
+            <div className={styles.actionGroup}>
+              {showBoost && onBoostClick && (
+                <button
+                  type="button"
+                  className={styles.boostActionBtn}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    onBoostClick(id)
+                  }}
+                  aria-label="Boost posting"
+                  title="Boost posting"
+                >
+                  <TrendingUp size={14} color="white" strokeWidth={2.5} />
+                </button>
+              )}
+              <div className={styles.actionBtn} aria-label="View listing">
+                <ArrowRight size={14} color="white" strokeWidth={2.5} />
+              </div>
             </div>
           </div>
         </div>
@@ -99,8 +117,24 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
         <p className={styles.seller}>by <span>{seller}</span></p>
         <div className={styles.footer}>
           <span className={styles.price}>{formatPrice(price)}</span>
-          <div className={styles.actionBtn} aria-label="View listing">
-            <ArrowRight size={14} color="white" strokeWidth={2.5} />
+          <div className={styles.actionGroup}>
+            {showBoost && onBoostClick && (
+              <button
+                type="button"
+                className={styles.boostActionBtn}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onBoostClick(id)
+                }}
+                aria-label="Boost posting"
+                title="Boost posting"
+              >
+                <TrendingUp size={14} color="white" strokeWidth={2.5} />
+              </button>
+            )}
+            <div className={styles.actionBtn} aria-label="View listing">
+              <ArrowRight size={14} color="white" strokeWidth={2.5} />
+            </div>
           </div>
         </div>
       </div>
