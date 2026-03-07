@@ -226,6 +226,18 @@
     box-shadow: 0 6px 16px rgba(26, 47, 110, 0.25);
 }
 
+.confirmError {
+    margin-top: -6px;
+    font-size: 0.84rem;
+    color: var(--danger);
+}
+
+.confirmSuccess {
+    margin-top: -6px;
+    font-size: 0.84rem;
+    color: var(--success);
+}
+
 @media (max-width: 560px) {
     .card {
         padding: 18px;

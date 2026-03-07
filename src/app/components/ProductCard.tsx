@@ -4,6 +4,26 @@ import type { Product } from '@/data/products'
 import styles from './ProductCard.module.css'
 
 const FALLBACK_IMAGE = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><rect width="600" height="600" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-family="Arial,sans-serif" font-size="24">No image</text></svg>'
+const BOOST_STORAGE_KEY = 'kampus_listing_boosts'
+
+function getBoostDaysLeft(listingId: number) {
+  try {
+    const raw = localStorage.getItem(BOOST_STORAGE_KEY)
+    if (!raw) return 0
+
+    const parsed = JSON.parse(raw) as Record<string, { expiresAt?: number }>
+    const boost = parsed[String(listingId)]
+    if (!boost || typeof boost.expiresAt !== 'number') return 0
+
+    const remainingMs = boost.expiresAt - Date.now()
+    if (remainingMs <= 0) return 0
+
+    const dayMs = 24 * 60 * 60 * 1000
+    return Math.ceil(remainingMs / dayMs)
+  } catch {
+    return 0
+  }
+}
 
 function handleImageError(e: React.SyntheticEvent<HTMLImageElement>) {
   const target = e.currentTarget
@@ -42,8 +62,10 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
   const { id, title, price, image, category, seller, condition } = product
   // Destructure new props
   const { selectable, selected, onSelect, showBoost, onBoostClick } = arguments[0]
+  const boostDaysLeft = getBoostDaysLeft(id)
+  const isBoosted = boostDaysLeft > 0
 
-  const cardClass = `${styles.card}${selected ? ' ' + styles.selected : ''}`
+  const cardClass = `${styles.card}${isBoosted ? ' ' + styles.boosted : ''}${selected ? ' ' + styles.selected : ''}`
 
   if (selectable) {
     return (
@@ -67,6 +89,11 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
           <span className={styles.category}>{category}</span>
           <p className={styles.title}>{title}</p>
           <p className={styles.seller}>by <span>{seller}</span></p>
+          {isBoosted && (
+            <p className={styles.boostMeta}>
+              Boosted · {boostDaysLeft} day{boostDaysLeft === 1 ? '' : 's'} left
+            </p>
+          )}
           <div className={styles.footer}>
             <span className={styles.price}>{formatPrice(price)}</span>
             <div className={styles.actionGroup}>
@@ -115,6 +142,11 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
         <span className={styles.category}>{category}</span>
         <p className={styles.title}>{title}</p>
         <p className={styles.seller}>by <span>{seller}</span></p>
+        {isBoosted && (
+          <p className={styles.boostMeta}>
+            Boosted · {boostDaysLeft} day{boostDaysLeft === 1 ? '' : 's'} left
+          </p>
+        )}
         <div className={styles.footer}>
           <span className={styles.price}>{formatPrice(price)}</span>
           <div className={styles.actionGroup}>

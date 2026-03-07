@@ -224,6 +224,19 @@
   gap: 8px;
 }
 
+.walletControls {
+  display: grid;
+  justify-items: end;
+  gap: 6px;
+}
+
+.walletActionError {
+  font-size: 0.8rem;
+  color: var(--danger);
+  text-align: right;
+  max-width: 280px;
+}
+
 .withdrawBtn {
   border: 1px solid var(--gray-200);
   background: white;

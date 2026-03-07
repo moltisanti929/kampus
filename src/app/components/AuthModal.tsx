@@ -10,11 +10,19 @@ interface MockAccount {
   name: string
   password: string
   year: '1st Year' | '2nd Year' | '3rd Year' | '4th Year'
-  course: 'BSCS' | 'BSIT' | 'BMMA' | 'BSEMC' | 'ENTREP'
+  course: 'BMMA - Animation' | 'BMMA - Graphic Design' | 'BMMA - Film' | 'BS - Entrep' | 'BSEMC' | 'BSCS' | 'BSIT'
 }
 
 const YEAR_OPTIONS: MockAccount['year'][] = ['1st Year', '2nd Year', '3rd Year', '4th Year']
-const COURSE_OPTIONS: MockAccount['course'][] = ['BSCS', 'BSIT', 'BMMA', 'BSEMC', 'ENTREP']
+const COURSE_OPTIONS: MockAccount['course'][] = [
+  'BMMA - Animation',
+  'BMMA - Graphic Design',
+  'BMMA - Film',
+  'BS - Entrep',
+  'BSEMC',
+  'BSCS',
+  'BSIT',
+]
 
 interface AuthModalProps {
   isOpen: boolean

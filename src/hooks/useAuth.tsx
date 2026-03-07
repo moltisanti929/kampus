@@ -5,7 +5,7 @@ export interface User {
   name: string
   email: string
   year?: '1st Year' | '2nd Year' | '3rd Year' | '4th Year'
-  course?: 'BSCS' | 'BSIT' | 'BMMA' | 'BSEMC' | 'ENTREP'
+  course?: 'BMMA - Animation' | 'BMMA - Graphic Design' | 'BMMA - Film' | 'BS - Entrep' | 'BSEMC' | 'BSCS' | 'BSIT'
 }
 
 interface AuthContextType {

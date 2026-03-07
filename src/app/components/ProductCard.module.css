@@ -11,6 +11,11 @@
   animation: fadeUp 0.4s ease both;
 }
 
+.boosted {
+  border: 1.5px solid #16a34a;
+  box-shadow: 0 10px 24px rgba(22, 163, 74, 0.2);
+}
+
 .selected {
   background: #ffeaea;
   border: 1.5px solid #e53935;
@@ -139,6 +144,14 @@
 .seller {
   font-size: 0.78rem;
   color: var(--gray-400);
+  margin-bottom: 10px;
+}
+
+.boostMeta {
+  font-size: 0.74rem;
+  color: #15803d;
+  font-weight: 600;
+  margin-top: -4px;
   margin-bottom: 10px;
 }
 

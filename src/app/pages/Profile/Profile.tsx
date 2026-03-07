@@ -23,7 +23,7 @@ interface MockAccount {
   name: string
   password: string
   year?: '1st Year' | '2nd Year' | '3rd Year' | '4th Year'
-  course?: 'BSCS' | 'BSIT' | 'BMMA' | 'BSEMC' | 'ENTREP'
+  course?: 'BMMA - Animation' | 'BMMA - Graphic Design' | 'BMMA - Film' | 'BS - Entrep' | 'BSEMC' | 'BSCS' | 'BSIT'
 }
 
 const getMockAccounts = (): MockAccount[] => {
@@ -53,6 +53,10 @@ export default function Profile() {
   const [isTopUpOpen, setIsTopUpOpen] = useState(false)
   const [topUpAmount, setTopUpAmount] = useState('')
   const [topUpError, setTopUpError] = useState('')
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false)
+  const [withdrawAmount, setWithdrawAmount] = useState('')
+  const [withdrawError, setWithdrawError] = useState('')
+  const [walletActionError, setWalletActionError] = useState('')
   const [isBoostOpen, setIsBoostOpen] = useState(false)
   const [boostTarget, setBoostTarget] = useState<{ id: number; title: string } | null>(null)
   const [selectedBoostPlan, setSelectedBoostPlan] = useState<BoostPlanId | ''>('')
@@ -145,6 +149,7 @@ export default function Profile() {
     const params = new URLSearchParams({
       mode: 'boost',
       amount: String(selectedPlan.amount),
+      boostDays: String(Number.parseInt(selectedPlan.id, 10)),
       itemTitle: `Boost: ${boostTarget.title} (${selectedPlan.label})`,
       seller: 'Kampus',
       sellerId: 'kampus',
@@ -156,6 +161,46 @@ export default function Profile() {
     setSelectedBoostPlan('')
     setBoostTarget(null)
     navigate(`/payment?${params.toString()}`)
+  }
+
+  const handleOpenWithdraw = () => {
+    if (walletBalance < 200) {
+      setWalletActionError('Minimum wallet balance of ₱200 is required before withdrawing.')
+      return
+    }
+
+    setWalletActionError('')
+    setWithdrawError('')
+    setWithdrawAmount('')
+    setIsWithdrawOpen(true)
+  }
+
+  const handleWithdraw = () => {
+    const amount = Number(withdrawAmount)
+    if (!Number.isFinite(amount) || amount <= 0) {
+      setWithdrawError('Please enter an amount greater than 0.')
+      return
+    }
+    if (amount > walletBalance) {
+      setWithdrawError('You cannot withdraw more than your current balance.')
+      return
+    }
+
+    const nextBalance = walletBalance - amount
+    try {
+      const raw = localStorage.getItem(WALLET_STORAGE_KEY)
+      const balances = raw ? (JSON.parse(raw) as Record<string, number>) : {}
+      balances[user.email] = nextBalance
+      localStorage.setItem(WALLET_STORAGE_KEY, JSON.stringify(balances))
+    } catch {
+      setWithdrawError('Could not process withdraw. Please try again.')
+      return
+    }
+
+    setWalletBalance(nextBalance)
+    setIsWithdrawOpen(false)
+    setWithdrawAmount('')
+    setWithdrawError('')
   }
 
   const profileData = {
@@ -221,22 +266,26 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className={styles.walletActions}>
-            <button
-              type="button"
-              className={styles.topUpTrigger}
-              onClick={() => {
-                setTopUpError('')
-                setTopUpAmount('')
-                setIsTopUpOpen(true)
-              }}
-            >
-              <Plus size={14} />
-              Top up
-            </button>
-            <button type="button" className={styles.withdrawBtn}>
-              Withdraw
-            </button>
+          <div className={styles.walletControls}>
+            <div className={styles.walletActions}>
+              <button
+                type="button"
+                className={styles.topUpTrigger}
+                onClick={() => {
+                  setWalletActionError('')
+                  setTopUpError('')
+                  setTopUpAmount('')
+                  setIsTopUpOpen(true)
+                }}
+              >
+                <Plus size={14} />
+                Top up
+              </button>
+              <button type="button" className={styles.withdrawBtn} onClick={handleOpenWithdraw}>
+                Withdraw
+              </button>
+            </div>
+            {walletActionError && <p className={styles.walletActionError}>{walletActionError}</p>}
           </div>
         </section>
       )}
@@ -474,6 +523,66 @@ export default function Profile() {
               </button>
               <button type="button" className={styles.payBtn} onClick={handleBoostPay}>
                 Pay
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isWithdrawOpen && (
+        <div
+          className={styles.topUpOverlay}
+          onClick={() => {
+            setIsWithdrawOpen(false)
+            setWithdrawError('')
+          }}
+        >
+          <div className={styles.topUpModal} onClick={(event) => event.stopPropagation()}>
+            <div className={styles.topUpHeader}>
+              <h3>Withdraw from K-Wallet</h3>
+              <button
+                type="button"
+                className={styles.topUpClose}
+                onClick={() => {
+                  setIsWithdrawOpen(false)
+                  setWithdrawError('')
+                }}
+                aria-label="Close withdraw modal"
+              >
+                <X size={14} />
+              </button>
+            </div>
+
+            <label className={styles.topUpField}>
+              Amount
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                value={withdrawAmount}
+                onChange={(event) => {
+                  setWithdrawAmount(event.target.value)
+                  if (withdrawError) setWithdrawError('')
+                }}
+                placeholder="Enter amount"
+              />
+            </label>
+
+            {withdrawError && <p className={styles.topUpError}>{withdrawError}</p>}
+
+            <div className={styles.topUpActions}>
+              <button
+                type="button"
+                className={styles.cancelBtn}
+                onClick={() => {
+                  setIsWithdrawOpen(false)
+                  setWithdrawError('')
+                }}
+              >
+                Cancel
+              </button>
+              <button type="button" className={styles.payBtn} onClick={handleWithdraw}>
+                Withdraw
               </button>
             </div>
           </div>
