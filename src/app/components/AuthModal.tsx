@@ -116,8 +116,8 @@ function SignInPanel({ onSwitch, onClose }: { onSwitch: (p: ModalPanel) => void;
       year: account.year,
       course: account.course,
     })
-    onClose()
-    alert('Welcome back! (Demo — backend coming soon.)')
+  onClose()
+  alert('Welcome back!')
   }
 
   return (

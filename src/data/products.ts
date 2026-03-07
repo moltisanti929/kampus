@@ -21,7 +21,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1597673030062-0a0f1a801a31?q=80&w=3096&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Electronics",
-    seller: "Sarah K.",
+    seller: "Maria Santos.",
     condition: "Like New",
   },
   {
@@ -31,7 +31,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1755620500895-b693799658ee?w=600&q=80",
     category: "Books",
-    seller: "Mike T.",
+    seller: "Miguel Reyes",
     condition: "Good",
   },
   {
@@ -41,7 +41,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1763783337455-ad63a238b400?w=600&q=80",
     category: "Sports",
-    seller: "John D.",
+    seller: "Juan dela Cruz",
     condition: "Used",
   },
   {
@@ -51,7 +51,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1688578735352-9a6f2ac3b70a?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Furniture",
-    seller: "Emma W.",
+    seller: "Ana Villanueva",
   },
   {
     id: 5,
@@ -60,7 +60,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1549872178-96db16a53ca8?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Accessories",
-    seller: "David L.",
+    seller: "Danilo Lim",
     condition: "Like New",
   },
   {
@@ -70,7 +70,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1628887067605-5171efd812e3?w=600&q=80",
     category: "Musical Instruments",
-    seller: "Lisa R.",
+    seller: "Ligaya Ramos.",
   },
   {
     id: 7,
@@ -79,7 +79,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1572119244337-bcb4aae995af?w=600&q=80",
     category: "Electronics",
-    seller: "Alex M.",
+    seller: "Alejandro Mendoza.",
     condition: "Like New",
   },
   {
@@ -89,7 +89,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1579535984712-92fffbbaa266?w=600&q=80",
     category: "Electronics",
-    seller: "Rachel P.",
+    seller: "Rachelle Padilla",
   },
   {
     id: 9,
@@ -98,7 +98,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1589542425426-2460d8243b58?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Sports",
-    seller: "Chris H.",
+    seller: "Christian Hernandez",
     condition: "Good",
   },
   {
@@ -108,7 +108,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1675242314995-034d11bac319?w=600&q=80",
     category: "School Supplies",
-    seller: "Anna B.",
+    seller: "Anna Bautista",
   },
   {
     id: 11,
@@ -117,7 +117,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1753109818483-9a1838b318b3?w=600&q=80",
     category: "Home",
-    seller: "Tom S.",
+    seller: "Tomas Santos",
     condition: "New",
   },
   {
@@ -127,7 +127,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1608354580875-30bd4168b351?w=600&q=80",
     category: "Appliances",
-    seller: "Jessica F.",
+    seller: "Jesica Flores",
     condition: "Like New",
   },
   {
@@ -137,7 +137,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1661324492805-2db1c80e2e76?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Services",
-    seller: "Alex M.",
+    seller: "Alejandro Mendoza.",
   },
   {
     id: 14,
@@ -146,7 +146,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=80",
     category: "Services",
-    seller: "Jamie R.",
+    seller: "Jamie Reyes",
   },
   {
     id: 15,
@@ -155,7 +155,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1597587606035-b64422b50f82?q=80&w=2338&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Services",
-    seller: "Casey L.",
+    seller: "Carla Lim",
   },
   {
     id: 16,
@@ -164,7 +164,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1683721003111-070bcc053d8b?q=80&w=2900&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Services",
-    seller: "Riley T.",
+    seller: "Rica Tan",
   },
   {
     id: 17,
@@ -173,7 +173,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://media.istockphoto.com/id/170044810/photo/text-correction-proofreader.webp?a=1&b=1&s=612x612&w=0&k=20&c=RJRn8ncJlZVdSCfsOmQa40OfU4bgpt6OatxMNwWjhkI=",
     category: "Services",
-    seller: "Sam K.",
+    seller: "Samuel Cruz",
   },
   {
     id: 18,
@@ -182,7 +182,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1759941279446-dea2722bca33?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dmludGFnZSUyMGdyYXBoaWMlMjB0ZWV8ZW58MHx8MHx8fDA%3D",
     category: "Apparel",
-    seller: "Mia P.",
+    seller: "Mia Pascual",
   },
   {
     id: 19,
@@ -191,7 +191,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1727524366429-27de8607d5f6?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Apparel",
-    seller: "Leo V.",
+    seller: "Leon Villanueva",
   },
   {
     id: 20,
@@ -200,7 +200,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1765040757862-3d6c19855a86?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8ZW1icm9pZGVyZWQlMjBob29kaWV8ZW58MHx8MHx8fDA%3D",
     category: "Apparel",
-    seller: "Nora S.",
+    seller: "Nora Salvador",
   },
   {
     id: 21,
@@ -209,7 +209,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=600&q=80",
     category: "Apparel",
-    seller: "Kai J.",
+    seller: "Karl Javier",
   },
   {
     id: 22,
@@ -218,7 +218,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGVuaW0lMjBzaG9ydHN8ZW58MHx8MHx8fDA%3D",
     category: "Apparel",
-    seller: "Zoe R.",
+    seller: "Zoe Reyes",
   },
   {
     id: 23,
@@ -227,7 +227,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1642984061426-642d8ac2d088?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YmxhY2slMjBwczUlMjBjb250cm9sbGVyfGVufDB8fDB8fHww",
     category: "Gaming",
-    seller: "Ethan B.",
+    seller: "Ethan Bautista",
     condition: "New",
   },
   {
@@ -237,7 +237,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1613141412501-9012977f1969?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z2FtaW5nJTIwbW91c2V8ZW58MHx8MHx8fDA%3D",
     category: "Gaming",
-    seller: "Liam H.",
+    seller: "Liam Hernandez",
   },
   {
     id: 25,
@@ -246,7 +246,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1621296679244-c4c26fdba11d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bmludGVuZG8lMjBzd2l0Y2glMjBwaW5rfGVufDB8fDB8fHww",
     category: "Gaming",
-    seller: "Ava K.",
+    seller: "Ava Cruz",
     condition: "Used",
   },
   {
@@ -256,7 +256,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1729860648688-1488d541fc92?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3RlYW0lMjBnYW1lJTIwY2FyZHxlbnwwfHwwfHx8MA%3D%3D",
     category: "Gaming",
-    seller: "Noah W.",
+    seller: "Noah Wenceslao",
   },
   {
     id: 27,
@@ -265,7 +265,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1677086813101-496781a0f327?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z2FtaW5nJTIwaGVhZHNldHxlbnwwfHwwfHx8MA%3D%3D",
     category: "Gaming",
-    seller: "Chloe F.",
+    seller: "Chloe Flores",
   },
   {
     id: 28,
@@ -274,7 +274,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1617663516011-cd60a0de811d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHN0YXIlMjB3YXJzJTIwbGVnb3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Hobbies & Toys",
-    seller: "Max D.",
+    seller: "Max dela Rosa",
     condition: "New",
   },
   {
@@ -284,7 +284,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1609058700004-608180fae6ac?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGppZ3NhdyUyMHB1enpsZSUyMGJveHxlbnwwfHwwfHx8MA%3D%3D",
     category: "Hobbies & Toys",
-    seller: "Lily C.",
+    seller: "Lily Castillo",
   },
   {
     id: 30,
@@ -293,7 +293,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1639478700281-fd11ca9e7e1b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2tldGNoaW5nJTIwa2l0fGVufDB8fDB8fHww",
     category: "Hobbies & Toys",
-    seller: "Finn M.",
+    seller: "Francis Mendoza",
   },
   {
     id: 31,
@@ -302,7 +302,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1714618849685-89cad85746b1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZHJvbmV8ZW58MHx8MHx8fDA%3D",
     category: "Hobbies & Toys",
-    seller: "Sophia R.",
+    seller: "Sofia Ramos",
   },
   {
     id: 32,
@@ -311,7 +311,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1769288361254-abb4783a6070?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Hobbies & Toys",
-    seller: "Jack L.",
+    seller: "Jack Lim",
   },
   {
     id: 33,
@@ -320,7 +320,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&q=80",
     category: "Makeup",
-    seller: "Emma T.",
+    seller: "Emma Torres",
   },
   {
     id: 34,
@@ -329,7 +329,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1768983224486-b4dcd179b4a5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGV5ZXNoYWRvdyUyMHBhbGV0dGV8ZW58MHx8MHx8fDA%3D",
     category: "Makeup",
-    seller: "Chloe M.",
+    seller: "Chloe Marcelo",
   },
   {
     id: 35,
@@ -338,7 +338,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1585519356004-2bd6527d9cbe?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8NSUyMG1hdHRlJTIwbGlwc3RpY2t8ZW58MHx8MHx8fDA%3D",
     category: "Makeup",
-    seller: "Zoe N.",
+    seller: "Zoe Navarro",
   },
   {
     id: 36,
@@ -347,7 +347,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1726840825289-8de3e79e42d5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Ymx1c2glMjBtYWtldXB8ZW58MHx8MHx8fDA%3D",
     category: "Makeup",
-    seller: "Mia R.",
+    seller: "Mia Rivera",
   },
   {
     id: 37,
@@ -356,7 +356,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=600&q=80",
     category: "Makeup",
-    seller: "Ava S.",
+    seller: "Ava Santos",
   },
   {
     id: 39,
@@ -365,7 +365,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1675155952889-abb299df1fe7?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8eW9nYSUyMG1hdHxlbnwwfHwwfHx8MA%3D%3D",
     category: "Health",
-    seller: "Sarah K.",
+    seller: "Maria Santos.",
   },
   {
     id: 40,
@@ -374,7 +374,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1664527307281-faf42c09ac8f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmV1c2FibGUlMjB3YXRlciUyMGJvdHRsZXxlbnwwfHwwfHx8MA%3D%3D",
     category: "Health",
-    seller: "Ethan F.",
+    seller: "Ethan Fernandez",
   },
   {
     id: 41,
@@ -383,7 +383,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1584827386916-b5351d3ba34b?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Health",
-    seller: "Mia J.",
+    seller: "Mia Javier",
   },
   {
     id: 42,
@@ -392,7 +392,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1624454002302-36b824d7bd0a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZXNzZW50aWFsJTIwb2lsc3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Health",
-    seller: "Noah P.",
+    seller: "Noah Pascual",
   },
   {
     id: 43,
@@ -401,7 +401,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1569762404472-026308ba6b64?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmFuYW5hJTIwYnJlYWR8ZW58MHx8MHx8fDA%3D",
     category: "Food & Drinks",
-    seller: "Ella M.",
+    seller: "Ella Macaraeg",
   },
   {
     id: 44,
@@ -410,7 +410,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8Y29sZCUyMGJyZXd8ZW58MHx8MHx8fDA%3D",
     category: "Food & Drinks",
-    seller: "Liam D.",
+    seller: "Liam Domingo",
   },
   {
     id: 45,
@@ -419,7 +419,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1624929101631-f35a320c521b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGdvdXJtZXQlMjBjb29raWVzJTIwcGFja3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Food & Drinks",
-    seller: "Ava L.",
+    seller: "Ava Lozano",
   },
   {
     id: 46,
@@ -428,7 +428,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1719833625904-820b301fbf7b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dmVnYW4lMjBtZWFsJTIwY2hpY2tlbiUyMGJveHxlbnwwfHwwfHx8MA%3D%3D",
     category: "Food & Drinks",
-    seller: "Zoe K.",
+    seller: "Zoe Katigbak",
   },
   {
     id: 47,
@@ -437,7 +437,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1600718374662-0483d2b9da44?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWl4ZWQlMjBiZXJyaWVzJTIwc21vb3RoaWV8ZW58MHx8MHx8fDA%3D",
     category: "Food & Drinks",
-    seller: "Noah S.",
+    seller: "Noah Soriano",
   },
   {
     id: 48,
@@ -446,7 +446,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1601758003630-df669e4e825a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y2hldyUyMHRveXN8ZW58MHx8MHx8fDA%3D",
     category: "Pet Supplies",
-    seller: "Lily H.",
+    seller: "Lily Hidalgo",
   },
   {
     id: 49,
@@ -455,7 +455,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1545249390-6bdfa286032f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2F0JTIwc2NyYXRjaGluZyUyMHBvc3R8ZW58MHx8MHx8fDA%3D",
     category: "Pet Supplies",
-    seller: "Max T.",
+    seller: "Max Torres",
   },
   {
     id: 50,
@@ -464,7 +464,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1661322506572-83e26fdfbcef?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZG9nJTIwdHJhdmVsJTIwYmFnfGVufDB8fDB8fHww",
     category: "Pet Supplies",
-    seller: "Emma J.",
+    seller: "Emma Jimenez",
   },
   {
     id: 51,
@@ -473,7 +473,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1633465091434-117f2bcffd9d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmlzaCUyMHRhbmslMjBkZWNvcnxlbnwwfHwwfHx8MA%3D%3D",
     category: "Pet Supplies",
-    seller: "Leo F.",
+    seller: "Leo Fernando",
   },
   {
     id: 52,
@@ -482,7 +482,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1647002380358-fc70ed2f04e0?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     category: "Pet Supplies",
-    seller: "Ava H.",
+    seller: "Ava Hernandez",
   },
   {
     id: 53,
@@ -491,7 +491,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&q=80",
     category: "Free Items",
-    seller: "Ethan K.",
+    seller: "Ethan Kalaw",
     condition: "Used",
   },
   {
@@ -510,7 +510,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1481011784351-b0227b9f4a80?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3JlZXRpbmclMjBjYXJkfGVufDB8fDB8fHww",
     category: "Free Items",
-    seller: "Noah M.",
+    seller: "Noah Macapagal",
   },
   {
     id: 56,
@@ -519,7 +519,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1625641936123-59d5bcc1edb8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGhvbmUlMjBjYXNlJTIwc2Ftc3VuZ3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Free Items",
-    seller: "Zoe P.",
+    seller: "Zoe Punzalan",
   },
   {
     id: 57,
@@ -528,7 +528,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1759773892997-12079c362fca?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHBsYW50JTIwcG90cyUyMHBsYXN0aWN8ZW58MHx8MHx8fDA%3D",
     category: "Free Items",
-    seller: "Jack T.",
+    seller: "Jack Tolentino",
   },
   {
     id: 58,
@@ -537,7 +537,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1554757388-1029138cb2fb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2F0ZXJjb2xvciUyMHBhZCUyMHBhcGVyfGVufDB8fDB8fHww",
     category: "Art & Stationery",
-    seller: "Lily M.",
+    seller: "Lily Manalo",
   },
   {
     id: 59,
@@ -546,7 +546,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1535340582796-799448c62e08?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29sb3JlZCUyMHBlbmNpbHMlMjAzNnxlbnwwfHwwfHx8MA%3D%3D",
     category: "Art & Stationery",
-    seller: "Max J.",
+    seller: "Max Javier",
   },
   {
     id: 60,
@@ -555,7 +555,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1653122662461-af601aac83f5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGNhbGxpZ3JhcGh5JTIwcGVufGVufDB8fDB8fHww",
     category: "Art & Stationery",
-    seller: "Mia F.",
+    seller: "Mia Francisco",
   },
   {
     id: 61,
@@ -564,7 +564,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1501618669935-18b6ecb13d6d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2tldGNoYm9va3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Art & Stationery",
-    seller: "Ethan P.",
+    seller: "Ethan Pascual",
   },
   {
     id: 62,
@@ -573,7 +573,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1760794751749-6df8746cf42b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FudmFzJTIwcGFuZWx8ZW58MHx8MHx8fDA%3D",
     category: "Art & Stationery",
-    seller: "Zoe H.",
+    seller: "Zoe Hizon",
   },
   {
     id: 63,
@@ -582,7 +582,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1594843665794-446ce915d840?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cG93ZXIlMjBiYW5rfGVufDB8fDB8fHww",
     category: "Other",
-    seller: "Ava M.",
+    seller: "Ava Magtanggol",
   },
   {
     id: 64,
@@ -591,7 +591,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1587145820098-23e484e69816?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNiJTIwZmxhc2glMjBkcml2ZXxlbnwwfHwwfHx8MA%3D%3D",
     category: "Other",
-    seller: "Leo D.",
+    seller: "Leo Dimaculangan",
   },
   {
     id: 65,
@@ -600,7 +600,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1535016120720-40c646be5580?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWluaSUyMHByb2plY3RvcnxlbnwwfHwwfHx8MA%3D%3D",
     category: "Other",
-    seller: "Mia N.",
+    seller: "Mia Navarrete",
   },
   {
     id: 66,
@@ -609,7 +609,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1708513427809-728a7913fc9f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGVkJTIwZGVzayUyMGxhbXB8ZW58MHx8MHx8fDA%3D",
     category: "Other",
-    seller: "Ethan L.",
+    seller: "Ethan Lacson",
   },
   {
     id: 67,
@@ -618,7 +618,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1758398332771-0a79c5df74a3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJhdmVsJTIwb3JnYW5pemVyJTIwcG91Y2h8ZW58MHx8MHx8fDA%3D",
     category: "Other",
-    seller: "Noah J.",
+    seller: "Noah Javier",
   },
   {
     id: 68,
@@ -627,7 +627,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1627989580309-bfaf3e58af6f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d2lyZWxlc3MlMjBlYXJidWRzfGVufDB8fDB8fHww",
     category: "Electronics",
-    seller: "Daniel R.",
+    seller: "Daniel Ramirez",
   },
   {
     id: 69,
@@ -636,7 +636,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1664699099341-b7c4229a8d97?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fG1vbml0b3J8ZW58MHx8MHx8fDA%3D",
     category: "Electronics",
-    seller: "Priya S.",
+    seller: "Patricia Santos",
   },
   {
     id: 70,
@@ -645,7 +645,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ymx1ZXRvb3RoJTIwc3BlYWtlcnN8ZW58MHx8MHx8fDA%3D",
     category: "Electronics",
-    seller: "Mark T.",
+    seller: "Mark Tuazon",
   },
   {
     id: 71,
@@ -654,7 +654,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1721133221361-4f2b2af3b6fe?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3NkfGVufDB8fDB8fHww",
     category: "Electronics",
-    seller: "Lina K.",
+    seller: "Lina Katigbak",
   },
   {
     id: 72,
@@ -663,7 +663,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Ym9va3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Books",
-    seller: "Oliver G.",
+    seller: "Oliver Garcia",
     condition: "Good",
   },
   {
@@ -673,7 +673,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Ym9va3N8ZW58MHx8MHx8fDA%3D",
     category: "Books",
-    seller: "Nadia H.",
+    seller: "Nadia Hidalgo",
   },
   {
     id: 74,
@@ -682,7 +682,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z3JhcGhpYyUyMGRlc2lnbnxlbnwwfHwwfHx8MA%3D%3D",
     category: "Books",
-    seller: "Luis P.",
+    seller: "Luis Palma",
   },
   {
     id: 75,
@@ -691,7 +691,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80",
     category: "Books",
-    seller: "Hannah C.",
+    seller: "Hannah Corpuz",
   },
   {
     id: 76,
@@ -700,7 +700,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&q=80",
     category: "Books",
-    seller: "Ethan V.",
+    seller: "Ethan Villanueva",
   },
   {
     id: 77,
@@ -709,7 +709,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1565022536102-f7645c84354a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZW5nbGlzaCUyMGJvb2tzfGVufDB8fDB8fHww",
     category: "Books",
-    seller: "Maya L.",
+    seller: "Maya Lacap",
   },
   {
     id: 78,
@@ -718,7 +718,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1664105111034-33e24dc90a78?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVuc3xlbnwwfHwwfHx8MA%3D%3D",
     category: "School Supplies",
-    seller: "SchoolStore",
+    seller: "Kate Buendia",
   },
   {
     id: 79,
@@ -727,7 +727,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1601001435957-74f0958a93fb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bm90ZWJvb2tzfGVufDB8fDB8fHww",
     category: "School Supplies",
-    seller: "Dana R.",
+    seller: "John Prado",
   },
   {
     id: 80,
@@ -736,7 +736,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1574607383077-47ddc2dc51c4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2NpZW50aWZpYyUyMGNhbGN1bGF0b3J8ZW58MHx8MHx8fDA%3D",
     category: "School Supplies",
-    seller: "Anna B.",
+    seller: "Andrei Villanueva",
   },
   {
     id: 81,
@@ -745,7 +745,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://media.istockphoto.com/id/182176138/photo/geometry-compass-ruler-and-red-pencil-on-white-background.webp?a=1&b=1&s=612x612&w=0&k=20&c=QY982xWkx1vn6diR_KLNnuyb02jFy9sZnALhxGwi520=",
     category: "School Supplies",
-    seller: "Kai J.",
+    seller: "Karl Javier",
   },
   {
     id: 82,
@@ -754,7 +754,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1586764635350-4f88a6a30a52?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGhpZ2hsaWdodGVyc3xlbnwwfHwwfHx8MA%3D%3D",
     category: "School Supplies",
-    seller: "Lily C.",
+    seller: "Lily Castillo",
   },
   {
     id: 83,
@@ -763,7 +763,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1513710281312-7a43f9cdbfcc?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW5kZXglMjBjYXJkc3xlbnwwfHwwfHx8MA%3D%3D",
     category: "School Supplies",
-    seller: "Max J.",
+    seller: "Max Javier",
   },
   {
     id: 84,
@@ -772,7 +772,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1759282946954-d1fdec6198eb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dXNiJTIwY2hhcmdpbmclMjBjYWJsZXN8ZW58MHx8MHx8fDA%3D",
     category: "School Supplies",
-    seller: "Noah J.",
+    seller: "Noah Javier",
   },
   {
     id: 85,
@@ -781,7 +781,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1723649902660-66643962d57b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sbGVnZSUyMGJhY2twYWNrfGVufDB8fDB8fHww",
     category: "School Supplies",
-    seller: "David L.",
+    seller: "Danilo Lim",
   },
   {
     id: 86,
@@ -790,7 +790,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://ciitstore.myshopify.com/cdn/shop/files/PENSTP5.jpg?v=1702265002",
     category: "Uniforms",
-    seller: "SchoolSupplyCo",
+    seller: "Dana Reyes",
   },
   {
     id: 87,
@@ -799,7 +799,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://ciitstore.myshopify.com/cdn/shop/files/PENSTP1.jpg?v=1702265002",
     category: "Uniforms",
-    seller: "Leo V.",
+    seller: "Leon Villanueva",
   },
   {
     id: 88,
@@ -808,7 +808,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://ciitstore.myshopify.com/cdn/shop/files/SHSShirt1.jpg?v=1702265878",
     category: "Uniforms",
-    seller: "Nora S.",
+    seller: "Nora Salvador",
   },
   {
     id: 89,
@@ -817,7 +817,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://www.dans.ph/cdn/shop/files/Untitleddesign-2025-02-27T110430.370.png?v=1740626275&width=416",
     category: "Uniforms",
-    seller: "Kai J.",
+    seller: "Karl Javier",
   },
   {
     id: 90,
@@ -826,7 +826,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://img.lazcdn.com/g/p/9cbf1097b8e209f16a9a879eb383ec29.jpg_720x720q80.jpg",
     category: "Uniforms",
-    seller: "Mia P.",
+    seller: "Mia Pascual",
   },
   {
     id: 91,
@@ -835,7 +835,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://ciitstore.myshopify.com/cdn/shop/files/Jogger1.jpg?v=1702265243",
     category: "Uniforms",
-    seller: "Emma W.",
+    seller: "Ana Villanueva",
   },
   {
     id: 93,
@@ -844,7 +844,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1668767725891-58f5cd788105?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YmFza2V0YmFsbHxlbnwwfHwwfHx8MA%3D%3D",
     category: "Sports",
-    seller: "Chris H.",
+    seller: "Christian Hernandez",
   },
   {
     id: 94,
@@ -853,7 +853,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
     category: "Sports",
-    seller: "Zoe R.",
+    seller: "Zoe Reyes",
   },
   {
     id: 95,
@@ -862,7 +862,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1617883861744-13b534e3b928?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGVubmlzJTIwcmFja2V0fGVufDB8fDB8fHww",
     category: "Sports",
-    seller: "John D.",
+    seller: "Juan dela Cruz",
   },
   {
     id: 96,
@@ -871,7 +871,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1711391585226-45a983eb8e70?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y29mZmVlJTIwdGFibGV8ZW58MHx8MHx8fDA%3D",
     category: "Furniture",
-    seller: "Tom S.",
+    seller: "Tomas Santos",
   },
   {
     id: 97,
@@ -880,7 +880,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1515542706656-8e6ef17a1521?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGJvb2tzaGVsZnxlbnwwfHwwfHx8MA%3D%3D",
     category: "Furniture",
-    seller: "Emma W.",
+    seller: "Ana Villanueva",
   },
   {
     id: 98,
@@ -889,7 +889,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1584036553516-bf83210aa16c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c3VuZ2xhc3Nlc3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Accessories",
-    seller: "Zoe R.",
+    seller: "Zoe Reyes",
   },
   {
     id: 99,
@@ -898,7 +898,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1664286074176-5206ee5dc878?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGVhdGhlciUyMGJlbHR8ZW58MHx8MHx8fDA%3D",
     category: "Accessories",
-    seller: "David L.",
+    seller: "Danilo Lim",
   },
   {
     id: 100,
@@ -907,7 +907,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1681498856888-2f3552c0b189?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2FudmFzJTIwdG90ZSUyMGJhZ3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Accessories",
-    seller: "Mia P.",
+    seller: "Mia Pascual",
   },
   {
     id: 101,
@@ -916,7 +916,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1621875833619-370c48ffa953?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dWtlbGVsZXxlbnwwfHwwfHx8MA%3D%3D",
     category: "Musical Instruments",
-    seller: "Lisa R.",
+    seller: "Ligaya Ramos.",
   },
   {
     id: 102,
@@ -925,7 +925,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1568193755668-aae18714a9f1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWxlY3RyaWMlMjBndWl0YXJ8ZW58MHx8MHx8fDA%3D",
     category: "Musical Instruments",
-    seller: "Jack L.",
+    seller: "Jack Lim",
   },
   {
     id: 103,
@@ -934,7 +934,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1523297554394-dc159677ffe1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHBpYW5vJTIwa2V5Ym9hcmR8ZW58MHx8MHx8fDA%3D",
     category: "Musical Instruments",
-    seller: "Ethan P.",
+    seller: "Ethan Pascual",
   },
   {
     id: 104,
@@ -943,7 +943,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1603192399946-8bbb0703cfc4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNvZmElMjBwaWxsb3d8ZW58MHx8MHx8fDA%3D",
     category: "Home",
-    seller: "Tom S.",
+    seller: "Tomas Santos",
   },
   {
     id: 105,
@@ -952,7 +952,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8d2FsbCUyMGFydHxlbnwwfHwwfHx8MA%3D%3D",
     category: "Home",
-    seller: "Zoe H.",
+    seller: "Zoe Hizon",
   },
   {
     id: 106,
@@ -961,7 +961,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1664194583989-96c9fa85de8f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8YmVkc2lkZSUyMGxhbXB8ZW58MHx8MHx8fDA%3D",
     category: "Home",
-    seller: "Emma W.",
+    seller: "Ana Villanueva",
   },
   {
     id: 107,
@@ -970,7 +970,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1675738774365-c542862be2d4?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHJ1Z3xlbnwwfHwwfHx8MA%3D%3D",
     category: "Home",
-    seller: "David L.",
+    seller: "Danilo Lim",
   },
   {
     id: 108,
@@ -979,7 +979,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://plus.unsplash.com/premium_photo-1718186096324-474ac487bcc3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3RhbmQlMjBtaXhlcnxlbnwwfHwwfHx8MA%3D%3D",
     category: "Appliances",
-    seller: "Jessica F.",
+    seller: "Jesica Flores",
   },
   {
     id: 109,
@@ -988,7 +988,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1738520420652-0c47cea3922b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWxlY3RyaWMlMjBrZXR0bGV8ZW58MHx8MHx8fDA%3D",
     category: "Appliances",
-    seller: "Liam D.",
+    seller: "Liam Domingo",
   },
   {
     id: 110,
@@ -997,7 +997,7 @@ export const PRODUCTS: Product[] = [
     image:
       "https://images.unsplash.com/photo-1695089028114-ce28248f0ab9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWlyJTIwZnJ5ZXJ8ZW58MHx8MHx8fDA%3D",
     category: "Appliances",
-    seller: "Mia N.",
+    seller: "Mia Navarrete",
   },
 ];
 

@@ -11,9 +11,9 @@ import styles from './Profile.module.css'
 const WALLET_STORAGE_KEY = 'kampus_wallet_balances'
 
 const BOOST_PLANS = [
-  { id: '1d', label: '1 day', amount: 25 },
-  { id: '3d', label: '3 days', amount: 60 },
-  { id: '7d', label: '7 days', amount: 120 },
+  { id: '1d', label: '1 day (24hr.)', amount: 25 },
+  { id: '3d', label: '3 days (72hr.)', amount: 60 },
+  { id: '7d', label: '7 days (168hr.)', amount: 120 },
 ] as const
 
 type BoostPlanId = (typeof BOOST_PLANS)[number]['id']
@@ -89,6 +89,23 @@ export default function Profile() {
     return l.seller === viewedName
   })
   const savedListings = listings.filter(l => likedIds.includes(l.id))
+
+  // Helper: sort by boost then recency
+  const sortByBoostThenNew = (arr: typeof listings) => {
+    try {
+      const raw = localStorage.getItem('kampus_listing_boosts')
+      const boosts = raw ? JSON.parse(raw) as Record<string, { expiresAt: number }> : {}
+      const now = Date.now()
+      return [...arr].sort((a, b) => {
+        const aBoost = boosts[String(a.id)] && boosts[String(a.id)].expiresAt > now ? boosts[String(a.id)].expiresAt : 0
+        const bBoost = boosts[String(b.id)] && boosts[String(b.id)].expiresAt > now ? boosts[String(b.id)].expiresAt : 0
+        if (aBoost && bBoost) return bBoost - aBoost
+        if (aBoost) return -1
+        if (bBoost) return 1
+        return Number(b.id) - Number(a.id)
+      })
+    } catch { return arr }
+  }
 
   useEffect(() => {
     // Ensure we never stay on Saved when navigating to another user's profile.
@@ -353,7 +370,7 @@ export default function Profile() {
             )}
             <div className={styles.grid}>
               {userListings.length > 0 ? (
-                userListings.map((p, i) => (
+                sortByBoostThenNew(userListings).map((p, i) => (
                   <div key={p.id} style={{ position: 'relative' }}>
                     <ProductCard
                       product={p}
@@ -393,7 +410,7 @@ export default function Profile() {
         {activeTab === 'saved' && (
           <div className={styles.grid}>
             {savedListings.length > 0 ? (
-              savedListings.map((p, i) => (
+              sortByBoostThenNew(savedListings).map((p, i) => (
                 <div key={p.id} style={{ position: 'relative' }}>
                   <ProductCard
                     product={p}

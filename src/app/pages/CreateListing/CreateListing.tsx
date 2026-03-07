@@ -37,6 +37,7 @@ export default function CreateListing() {
   const [meetup, setMeetup] = useState('')
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState('')
+  const [selectedBoost, setSelectedBoost] = useState<'none' | '1d' | '3d' | '7d'>('none')
 
   const handlePhotoAdd = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? [])
@@ -76,7 +77,7 @@ export default function CreateListing() {
     const newListing = {
       id: Date.now(),
       title,
-      price: Number(price),
+      price: Number(price), // commission applied in addListing
       image: photos[0] || '',
       photos,
       category,
@@ -86,6 +87,23 @@ export default function CreateListing() {
       description,
     }
     addListing(newListing)
+    // If user chose a boost plan, route to payment to pay for the boost
+    if (selectedBoost !== 'none') {
+      const planMap: Record<string, number> = { '1d': 25, '3d': 60, '7d': 120 }
+      const planDaysMap: Record<string, number> = { '1d': 1, '3d': 3, '7d': 7 }
+      const params = new URLSearchParams({
+        mode: 'boost',
+        amount: String(planMap[selectedBoost]),
+        boostDays: String(planDaysMap[selectedBoost] ?? 0),
+        itemTitle: `Boost: ${title}`,
+        seller: 'Kampus',
+        listingId: String(newListing.id),
+      })
+      alert('Listing posted! Proceed to payment to activate boost.')
+      navigate(`/payment?${params.toString()}`)
+      return
+    }
+
     alert('Listing posted!')
     navigate('/')
   }
@@ -110,6 +128,7 @@ export default function CreateListing() {
           Publish
         </button>
       </div>
+      {/* Bottom area with boost options and publish button */}
 
       <div className={styles.layout}>
 
@@ -279,6 +298,39 @@ export default function CreateListing() {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* Boost listing card */}
+          <div className={styles.section}>
+            <h2>Boost Listing</h2>
+            <div className={styles.planList}>
+              {[
+                { id: '1d' as const, label: '1 day (24hr.)', amount: 25 },
+                { id: '3d' as const, label: '3 days (72hr.)', amount: 60 },
+                { id: '7d' as const, label: '7 days (168hr.)', amount: 120 },
+              ].map((plan) => (
+                <button
+                  key={plan.id}
+                  type="button"
+                  className={`${styles.planBtn} ${selectedBoost === plan.id ? styles.planBtnActive : ''}`}
+                  onClick={() => setSelectedBoost(plan.id)}
+                >
+                  <span>{plan.label}</span>
+                  <strong>₱{plan.amount}</strong>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom publish button: left aligned with margin */}
+          <div style={{ marginTop: 18, display: 'flex', justifyContent: 'flex-start' }}>
+            <button
+              className={`${styles.publishBtn} ${!isValid ? styles.publishBtnDisabled : ''}`}
+              onClick={handleSubmit}
+              disabled={!isValid}
+            >
+              Publish
+            </button>
           </div>
 
         </div>

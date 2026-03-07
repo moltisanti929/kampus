@@ -9,7 +9,6 @@ type PaymentMethod = 'cash' | 'card' | 'qrph'
 
 const WALLET_STORAGE_KEY = 'kampus_wallet_balances'
 const BOOST_STORAGE_KEY = 'kampus_listing_boosts'
-
 function formatMoney(amount: number) {
     return `₱${amount.toLocaleString('en-PH', {
         minimumFractionDigits: 2,
@@ -92,82 +91,114 @@ export default function Payment() {
     )
 
     const handleConfirm = () => {
-        setConfirmError('')
-        setConfirmSuccess('')
+  setConfirmError('')
+  setConfirmSuccess('')
 
-        if (selectedMethod !== 'qrph') {
-            setConfirmError('Devtool Confirm currently works only for QRPH.')
-            return
-        }
+  // ── TOP-UP ──────────────────────────────────────────────────
+  if (isTopUpMode) {
+    if (!user) { setConfirmError('You must be logged in to top up K-Wallet.'); return }
+    if (amount <= 0) { setConfirmError('Invalid top-up amount.'); return }
+    try {
+      const raw = localStorage.getItem(WALLET_STORAGE_KEY)
+      const balances = raw ? (JSON.parse(raw) as Record<string, number>) : {}
+      const current = typeof balances[user.email] === 'number' ? balances[user.email] : 0
+      balances[user.email] = current + amount
+      localStorage.setItem(WALLET_STORAGE_KEY, JSON.stringify(balances))
+    } catch { setConfirmError('Could not update K-Wallet balance.'); return }
+    navigate('/profile')
+    return
+  }
 
-        if (isTopUpMode) {
-            if (!user) {
-                setConfirmError('You must be logged in to top up K-Wallet.')
-                return
-            }
-            if (amount <= 0) {
-                setConfirmError('Invalid top-up amount.')
-                return
-            }
-
-            try {
-                const raw = localStorage.getItem(WALLET_STORAGE_KEY)
-                const balances = raw ? (JSON.parse(raw) as Record<string, number>) : {}
-                const current = typeof balances[user.email] === 'number' ? balances[user.email] : 0
-                balances[user.email] = current + amount
-                localStorage.setItem(WALLET_STORAGE_KEY, JSON.stringify(balances))
-            } catch {
-                setConfirmError('Could not update K-Wallet balance.')
-                return
-            }
-
-            setConfirmSuccess(`Added ${formatMoney(amount)} to your K-Wallet.`)
-            navigate('/profile')
-            return
-        }
-
-        if (isBoostMode) {
-            if (!Number.isFinite(listingIdRaw) || listingIdRaw <= 0) {
-                setConfirmError('Invalid listing target for boost.')
-                return
-            }
-
-            const boostDays = Number.isFinite(boostDaysRaw) && boostDaysRaw > 0 ? boostDaysRaw : 1
-            const dayMs = 24 * 60 * 60 * 1000
-
-            try {
-                const raw = localStorage.getItem(BOOST_STORAGE_KEY)
-                const boosts = raw
-                    ? (JSON.parse(raw) as Record<string, { expiresAt: number; amount: number; planDays: number; paidAt: number; method: string }>)
-                    : {}
-
-                const key = String(listingIdRaw)
-                const current = boosts[key]
-                const now = Date.now()
-                const startsAt = current && current.expiresAt > now ? current.expiresAt : now
-                const expiresAt = startsAt + boostDays * dayMs
-
-                boosts[key] = {
-                    expiresAt,
-                    amount,
-                    planDays: boostDays,
-                    paidAt: now,
-                    method: 'qrph',
-                }
-
-                localStorage.setItem(BOOST_STORAGE_KEY, JSON.stringify(boosts))
-            } catch {
-                setConfirmError('Could not apply listing boost.')
-                return
-            }
-
-            setConfirmSuccess(`Boost activated for ${boostDays} day${boostDays === 1 ? '' : 's'}.`)
-            navigate('/profile')
-            return
-        }
-
-        setConfirmSuccess('QRPH payment confirmed (devtool).')
+  // ── BOOST ───────────────────────────────────────────────────
+  if (isBoostMode) {
+    if (!Number.isFinite(listingIdRaw) || listingIdRaw <= 0) {
+      setConfirmError('Invalid listing target for boost.'); return
     }
+    if (selectedMethod === 'card' && (!cardName || !cardNumber || !cardExpiry || !cardCvv)) {
+      setConfirmError('Please fill in card details to confirm card payment.'); return
+    }
+    const boostDays = Number.isFinite(boostDaysRaw) && boostDaysRaw > 0 ? boostDaysRaw : 1
+    const dayMs = 24 * 60 * 60 * 1000
+    try {
+      const raw = localStorage.getItem(BOOST_STORAGE_KEY)
+      const boosts = raw ? (JSON.parse(raw) as Record<string, { expiresAt: number; amount: number; planDays: number; paidAt: number; method: string }>) : {}
+      const key = String(listingIdRaw)
+      const current = boosts[key]
+      const now = Date.now()
+      const startsAt = current && current.expiresAt > now ? current.expiresAt : now
+      boosts[key] = { expiresAt: startsAt + boostDays * dayMs, amount, planDays: boostDays, paidAt: now, method: selectedMethod }
+      localStorage.setItem(BOOST_STORAGE_KEY, JSON.stringify(boosts))
+    } catch { setConfirmError('Could not apply listing boost.'); return }
+    navigate('/profile')
+    return
+  }
+
+  // ── BUYER → SELLER TRANSACTION ──────────────────────────────
+  const conversationId = searchParams.get('conversationId')
+  if (conversationId) {
+    if (selectedMethod === 'card' && (!cardName || !cardNumber || !cardExpiry || !cardCvv)) {
+      setConfirmError('Please fill in card details to confirm card payment.'); return
+    }
+
+    try {
+      // Credit seller wallet minus 10% commission
+      const rawWallet = localStorage.getItem(WALLET_STORAGE_KEY)
+      const balances = rawWallet ? (JSON.parse(rawWallet) as Record<string, number>) : {}
+      const convRaw = localStorage.getItem('kampus_messages_global')
+      const convs = convRaw ? (JSON.parse(convRaw) as any[]) : []
+      const conv = convs.find((c) => c.id === conversationId)
+      const sellerId = conv?.sellerId || conv?.seller || ''
+
+      if (sellerId && amount > 0) {
+        const sellerCredit = amount - amount * 0.1
+        const current = typeof balances[sellerId] === 'number' ? balances[sellerId] : 0
+        balances[sellerId] = current + sellerCredit
+        localStorage.setItem(WALLET_STORAGE_KEY, JSON.stringify(balances))
+      }
+
+      // Append payment_method message to conversation
+      if (conv) {
+        const methodLabel =
+          selectedMethod === 'qrph' ? 'QR PH' :
+          selectedMethod === 'card' ? 'Debit/Credit Card' : 'Cash'
+        const now = Date.now()
+        conv.messages = conv.messages || []
+        conv.messages.push({
+          id: now,
+          kind: 'payment_method',
+          senderId: user?.id || 'buyer',
+          senderName: user?.name || 'Buyer',
+          timestamp: now,
+          method: methodLabel,
+          totalAmount: amount,
+          commission: amount * 0.1,
+        })
+        conv.updatedAt = now
+        localStorage.setItem('kampus_messages_global', JSON.stringify(convs))
+      }
+    } catch { setConfirmError('Could not finalize payment.'); return }
+
+    // Cash → straight to chat
+    if (selectedMethod === 'cash') {
+      navigate(`/messages?conversationId=${encodeURIComponent(conversationId)}`)
+      return
+    }
+
+    // Card / QRPH → proof page (auto-redirects to chat after 8s)
+    const proofParams = new URLSearchParams()
+    proofParams.set('conversationId', conversationId)
+    proofParams.set('method', selectedMethod === 'qrph' ? 'QR PH' : 'Debit/Credit Card')
+    proofParams.set('amount', String(amount))
+    if (selectedMethod === 'card') {
+      const last4 = cardNumber.replace(/\D/g, '').slice(-4)
+      if (last4) proofParams.set('cardLast4', last4)
+    }
+    navigate(`/payment/proof?${proofParams.toString()}`)
+    return
+  }
+
+  setConfirmSuccess(`${selectedLabel} payment processed.`)
+}
 
     return (
         <div className={styles.page}>

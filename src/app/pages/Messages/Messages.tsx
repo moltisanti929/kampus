@@ -24,7 +24,14 @@ interface PriceOfferMessage extends BaseMessage {
     totalAmount: number
 }
 
-type Message = TextMessage | PriceOfferMessage
+interface PaymentMethodMessage extends BaseMessage {
+    kind: 'payment_method'
+    method: string
+    commission: number
+    totalAmount: number
+}
+
+type Message = TextMessage | PriceOfferMessage | PaymentMethodMessage
 
 interface Conversation {
     id: string
@@ -88,23 +95,41 @@ function loadAllConversations() {
                             typeof message.timestamp === 'number' ? message.timestamp : Date.now() + index
                         const messageId = typeof message.id === 'number' ? message.id : timestamp + index
 
-                        if (
-                            message.kind === 'price_offer' &&
-                            typeof message.offerPrice === 'number' &&
-                            typeof message.commission === 'number' &&
-                            typeof message.totalAmount === 'number'
-                        ) {
-                            return {
-                                id: messageId,
-                                kind: 'price_offer',
-                                senderId,
-                                senderName,
-                                timestamp,
-                                offerPrice: message.offerPrice,
-                                commission: message.commission,
-                                totalAmount: message.totalAmount,
-                            }
-                        }
+                                if (
+                                    message.kind === 'price_offer' &&
+                                    typeof (message as any).offerPrice === 'number' &&
+                                    typeof (message as any).commission === 'number' &&
+                                    typeof (message as any).totalAmount === 'number'
+                                ) {
+                                    return {
+                                        id: messageId,
+                                        kind: 'price_offer',
+                                        senderId,
+                                        senderName,
+                                        timestamp,
+                                        offerPrice: (message as any).offerPrice,
+                                        commission: (message as any).commission,
+                                        totalAmount: (message as any).totalAmount,
+                                    }
+                                }
+
+                                if (
+                                    message.kind === 'payment_method' &&
+                                    typeof (message as any).method === 'string' &&
+                                    typeof (message as any).commission === 'number' &&
+                                    typeof (message as any).totalAmount === 'number'
+                                ) {
+                                    return {
+                                        id: messageId,
+                                        kind: 'payment_method',
+                                        senderId,
+                                        senderName,
+                                        timestamp,
+                                        method: (message as any).method,
+                                        commission: (message as any).commission,
+                                        totalAmount: (message as any).totalAmount,
+                                    }
+                                }
 
                         return {
                             id: messageId,
@@ -112,7 +137,8 @@ function loadAllConversations() {
                             senderId,
                             senderName,
                             timestamp,
-                            text: typeof message.text === 'string' ? message.text : '',
+                            // message is a loose object from storage; cast to any to safely access fields
+                            text: typeof (message as any).text === 'string' ? (message as any).text : '',
                         }
                     })
                     .filter((message): message is Message => message !== null)
@@ -154,7 +180,8 @@ function formatMoney(amount: number) {
 function getMessagePreview(message?: Message) {
     if (!message) return 'Start the chat'
     if (message.kind === 'price_offer') return `Price offer: ${formatMoney(message.totalAmount)}`
-    return message.text || 'Start the chat'
+    if (message.kind === 'payment_method') return `Payment: ${message.method}`
+    return (message as TextMessage).text || 'Start the chat'
 }
 
 export default function Messages() {
@@ -212,7 +239,10 @@ export default function Messages() {
         const itemId = Number(searchParams.get('itemId'))
         const itemTitle = searchParams.get('itemTitle')
 
-        if (!seller || Number.isNaN(itemId) || itemId <= 0 || !itemTitle) {
+    const paymentMethod = searchParams.get('paymentMethod')
+    const cardLast4 = searchParams.get('cardLast4')
+
+    if (!seller || Number.isNaN(itemId) || itemId <= 0 || !itemTitle) {
             return
         }
 
@@ -248,6 +278,38 @@ export default function Messages() {
             }
             return [starter, ...prev]
         })
+
+        // If a paymentMethod param was provided, append an informational message so seller knows how buyer paid
+        if (paymentMethod) {
+            const now = Date.now()
+            const note =
+                paymentMethod === 'cash'
+                    ? `Buyer confirmed payment: Cash (will pay in person).`
+                    : paymentMethod === 'card'
+                    ? `Buyer confirmed payment: Card ending ••••${cardLast4 || 'XXXX'}.`
+                    : `Buyer confirmed payment via ${paymentMethod}.`
+
+            setAllConversations((prev) =>
+                prev.map((conversation) => {
+                    if (conversation.id !== conversationId) return conversation
+                    return {
+                        ...conversation,
+                        updatedAt: now,
+                        messages: [
+                            ...conversation.messages,
+                            {
+                                id: now + 1,
+                                kind: 'text',
+                                senderId: buyerId,
+                                senderName: user.name || 'Buyer',
+                                text: note,
+                                timestamp: now + 1,
+                            },
+                        ],
+                    }
+                })
+            )
+        }
 
         setActiveConversationId(conversationId)
         navigate('/messages', { replace: true })
@@ -469,12 +531,27 @@ export default function Messages() {
 
                                                 <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
                                             </div>
-                                        ) : (
-                                            <div className={styles.messageBubble}>
-                                                <p>{message.text}</p>
-                                                <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
-                                            </div>
-                                        )}
+                                                ) : message.kind === 'payment_method' ? (
+                                                    <div className={`${styles.messageBubble} ${styles.offerBubble}`}>
+                                                        <p className={styles.offerHeader}>Payment Method</p>
+                                                        <div className={styles.offerReceipt}>
+                                                            <div className={styles.offerRow}>
+                                                                <span className={styles.offerLabel}>Method</span>
+                                                                <span className={styles.offerValue}>{(message as PaymentMethodMessage).method}</span>
+                                                            </div>
+                                                            <div className={`${styles.offerRow} ${styles.offerTotal}`}>
+                                                                <span className={styles.offerLabel}>Total</span>
+                                                                <span className={styles.offerValue}>{formatMoney((message as PaymentMethodMessage).totalAmount)}</span>
+                                                            </div>
+                                                        </div>
+                                                        <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
+                                                    </div>
+                                                ) : (
+                                                    <div className={styles.messageBubble}>
+                                                        <p>{(message as TextMessage).text}</p>
+                                                        <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
+                                                    </div>
+                                                )}
                                     </div>
                                 ))}
                             </div>

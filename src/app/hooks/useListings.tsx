@@ -14,21 +14,30 @@ export function ListingsProvider({ children }: { children: ReactNode }) {
     const [listings, setListings] = useState<Product[]>(() => {
         try {
             const stored = localStorage.getItem('user_listings')
-            const userListings = stored ? JSON.parse(stored) : []
-            // Merge demo PRODUCTS and user listings, avoiding duplicate IDs
-            const allIds = new Set([...PRODUCTS.map(p => p.id), ...userListings.map(p => p.id)])
-            const merged = Array.from(allIds).map(id => {
-                return userListings.find(p => p.id === id) || PRODUCTS.find(p => p.id === id)
-            }).filter(Boolean)
-            return merged
+            const userListings: Product[] = stored ? JSON.parse(stored) : []
+            // Start from demo PRODUCTS but override by userListings when IDs match.
+            // This prevents having the same product show multiple times across categories.
+            const byId = new Map<number, Product>()
+            for (const p of PRODUCTS) byId.set(p.id, p)
+            for (const p of userListings) byId.set(p.id, p)
+            return Array.from(byId.values())
         } catch {
             return PRODUCTS
         }
     })
 
+    // Apply 10% commission automatically when adding listing.
+    const applyCommission = (price: number) => {
+        const commission = price * 0.1
+        return Math.round((price + commission) * 100) / 100
+    }
+
     const addListing = (listing: Product) => {
         setListings(prev => {
-            const updated = [...prev, listing]
+            // Ensure commission is applied and avoid duplicate IDs
+            const withCommission = { ...listing, price: applyCommission(Number(listing.price)) }
+            const filtered = prev.filter(l => l.id !== withCommission.id)
+            const updated = [...filtered, withCommission]
             try { localStorage.setItem('user_listings', JSON.stringify(updated)) } catch { }
             return updated
         })

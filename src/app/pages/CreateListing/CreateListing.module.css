@@ -425,3 +425,33 @@
   left: 0;
   font-weight: 700;
 }
+
+/* ─── BOOST PLANS ─────────────────────────────────────────── */
+.planList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.planBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--gray-200);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--gray-600);
+  text-align: left;
+  transition: all 0.15s;
+  width: 100%;
+}
+.planBtn:hover { border-color: var(--navy); color: var(--navy); background: var(--blue-light); }
+
+.planBtnActive {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+.planBtnActive strong { color: white; }

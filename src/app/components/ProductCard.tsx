@@ -1,4 +1,5 @@
 import { Heart, ArrowRight, TrendingUp } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 import type { Product } from '@/data/products'
 import styles from './ProductCard.module.css'
@@ -64,6 +65,8 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
   const { selectable, selected, onSelect, showBoost, onBoostClick } = arguments[0]
   const boostDaysLeft = getBoostDaysLeft(id)
   const isBoosted = boostDaysLeft > 0
+  const { user } = useAuth()
+  const canSeeBoostDetails = Boolean(user && (user.email === product.sellerId || user.name === product.seller))
 
   const cardClass = `${styles.card}${isBoosted ? ' ' + styles.boosted : ''}${selected ? ' ' + styles.selected : ''}`
 
@@ -83,15 +86,20 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
           >
             <Heart size={15} />
           </button>
+          {isBoosted && (
+            <span className={styles.boostIndicator} title="Boosted" aria-hidden>
+              <TrendingUp size={14} color="#10b981" />
+            </span>
+          )}
         </div>
         {/* Body */}
         <div className={styles.body}>
           <span className={styles.category}>{category}</span>
           <p className={styles.title}>{title}</p>
           <p className={styles.seller}>by <span>{seller}</span></p>
-          {isBoosted && (
+          {isBoosted && canSeeBoostDetails && (
             <p className={styles.boostMeta}>
-              Boosted · {boostDaysLeft} day{boostDaysLeft === 1 ? '' : 's'} left
+              Boosted {boostDaysLeft} day{boostDaysLeft === 1 ? '' : 's'} left
             </p>
           )}
           <div className={styles.footer}>
@@ -136,15 +144,20 @@ export function ProductCard({ product, liked, onToggleLike, style }: ProductCard
         >
           <Heart size={15} />
         </button>
+        {isBoosted && (
+          <span className={styles.boostIndicator} title="Boosted" aria-hidden>
+            <TrendingUp size={14} color="#10b981" />
+          </span>
+        )}
       </div>
       {/* Body */}
       <div className={styles.body} onClick={() => navigate(`/item/${id}`)} style={{ cursor: 'pointer' }}>
         <span className={styles.category}>{category}</span>
         <p className={styles.title}>{title}</p>
         <p className={styles.seller}>by <span>{seller}</span></p>
-        {isBoosted && (
+        {isBoosted && canSeeBoostDetails && (
           <p className={styles.boostMeta}>
-            Boosted · {boostDaysLeft} day{boostDaysLeft === 1 ? '' : 's'} left
+            Boosted {boostDaysLeft} day{boostDaysLeft === 1 ? '' : 's'} left
           </p>
         )}
         <div className={styles.footer}>

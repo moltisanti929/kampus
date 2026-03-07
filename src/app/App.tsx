@@ -13,6 +13,7 @@ import Profile from './pages/Profile/Profile'
 import CreateListing from './pages/CreateListing/CreateListing'
 import Messages from './pages/Messages/Messages'
 import Payment from './pages/Payment/Payment'
+import Proof from './pages/Payment/Proof'
 import { AuthProvider } from '@/hooks/useAuth'
 import { ListingsProvider, useListings } from './hooks/useListings'
 import { RequireAuth } from './components/RequireAuth'
@@ -40,7 +41,12 @@ function Home() {
   }
 
   const { listings } = useListings()
-  let allProducts = [...PRODUCTS, ...listings]
+  // Merge demo PRODUCTS and user listings, with user listings overriding same IDs
+  const byId = new Map<number, typeof PRODUCTS[number]>()
+  for (const p of PRODUCTS) byId.set(p.id, p)
+  for (const p of listings) byId.set(p.id, p)
+  let allProducts = Array.from(byId.values())
+
   // Filter by category
   if (activeCategory !== 'All') {
     allProducts = allProducts.filter((p) => p.category === activeCategory)
@@ -50,6 +56,22 @@ function Home() {
     allProducts = allProducts.filter((p) =>
       p.title.toLowerCase().includes(searchQuery.toLowerCase())
     )
+  }
+  // Sort: boosted items first (recent boosts appear first), then by newest id
+  try {
+    const raw = localStorage.getItem('kampus_listing_boosts')
+    const boosts = raw ? JSON.parse(raw) as Record<string, { expiresAt: number }> : {}
+    const now = Date.now()
+    allProducts.sort((a, b) => {
+      const aBoost = boosts[String(a.id)] && boosts[String(a.id)].expiresAt > now ? boosts[String(a.id)].expiresAt : 0
+      const bBoost = boosts[String(b.id)] && boosts[String(b.id)].expiresAt > now ? boosts[String(b.id)].expiresAt : 0
+      if (aBoost && bBoost) return bBoost - aBoost
+      if (aBoost) return -1
+      if (bBoost) return 1
+      return Number(b.id) - Number(a.id)
+    })
+  } catch {
+    // ignore
   }
   return (
     <>
@@ -109,6 +131,14 @@ export default function App() {
               element={
                 <RequireAuth onUnauth={() => modal.open('signin')}>
                   <Payment />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/payment/proof"
+              element={
+                <RequireAuth onUnauth={() => modal.open('signin')}>
+                  <Proof />
                 </RequireAuth>
               }
             />

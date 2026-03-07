@@ -107,6 +107,19 @@
   fill: #ef4444;
 }
 
+.boostIndicator {
+  position: absolute;
+  top: 12px;
+  right: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(16,185,129,0.12);
+}
+
 /* ─── BODY ────────────────────────────────────────────────── */
 .body {
   padding: 14px 16px 16px;

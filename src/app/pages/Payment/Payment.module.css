@@ -260,3 +260,35 @@
         grid-column: auto;
     }
 }
+
+.proofIcon {
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 20px;
+}
+
+.statusPaid {
+  background: #dcfce7;
+  color: #16a34a;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.refCode {
+  font-family: monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: var(--gray-400) !important;
+}
+
+.redirectNote {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--gray-400);
+  margin: 16px 0 4px;
+}
+.redirectNote strong {
+  color: var(--navy);
+}
