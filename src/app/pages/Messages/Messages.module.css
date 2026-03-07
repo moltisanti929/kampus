@@ -249,11 +249,83 @@
     line-height: 1.45;
 }
 
-.messageBubble span {
+.messageTime {
     margin-top: 6px;
     display: block;
     font-size: 0.7rem;
     opacity: 0.7;
+}
+
+.offerBubble {
+    min-width: min(82%, 320px);
+}
+
+.offerHeader {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.offerReceipt {
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    border-radius: 10px;
+    padding: 9px 10px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.offerRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.82rem;
+    margin-bottom: 6px;
+}
+
+.offerLabel {
+    color: var(--gray-600);
+}
+
+.offerValue {
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.offerRow:last-child {
+    margin-bottom: 0;
+}
+
+.offerTotal {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(148, 163, 184, 0.5);
+}
+
+.offerTotal .offerLabel,
+.offerTotal .offerValue {
+    font-weight: 800;
+    color: var(--navy);
+}
+
+.payBtn {
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 9px;
+    padding: 8px 10px;
+    background: var(--navy);
+    color: white;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.payBtn:hover {
+    background: var(--navy-light);
+}
+
+.offerMeta {
+    margin-top: 9px;
+    font-size: 0.75rem;
+    opacity: 0.8;
 }
 
 .composer {
@@ -277,7 +349,7 @@
     border-color: var(--navy);
 }
 
-.composer button {
+.sendBtn {
     width: 42px;
     height: 42px;
     border-radius: 50%;
@@ -288,9 +360,163 @@
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
-.composer button:hover {
+.sendBtn:hover {
     transform: translateY(-1px);
     box-shadow: 0 5px 14px rgba(26, 47, 110, 0.22);
+}
+
+.priceBtn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gray-200);
+    color: var(--navy);
+    background: white;
+    display: grid;
+    place-items: center;
+    transition: all 0.18s ease;
+}
+
+.priceBtn:hover {
+    border-color: var(--navy);
+    background: var(--blue-light);
+    transform: translateY(-1px);
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 16, 34, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 240;
+    display: grid;
+    place-items: center;
+    padding: 16px;
+}
+
+.modal {
+    width: min(100%, 420px);
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 18px 44px rgba(8, 16, 34, 0.25);
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.modalHeader h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+.modalClose {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--gray-200);
+    color: var(--gray-600);
+    display: grid;
+    place-items: center;
+}
+
+.modalClose:hover {
+    color: var(--navy);
+    border-color: rgba(26, 47, 110, 0.3);
+}
+
+.modalLabel {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 6px;
+}
+
+.modalInput {
+    width: 100%;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.modalInput:focus {
+    border-color: var(--navy);
+}
+
+.summaryBox {
+    margin-top: 14px;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: #f8fbff;
+}
+
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.84rem;
+    margin-bottom: 8px;
+}
+
+.summaryRow:last-child {
+    margin-bottom: 0;
+}
+
+.summaryTotal {
+    font-weight: 700;
+    color: var(--navy);
+    padding-top: 8px;
+    border-top: 1px dashed rgba(148, 163, 184, 0.55);
+}
+
+.modalActions {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.cancelBtn,
+.confirmBtn {
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.cancelBtn {
+    border: 1px solid var(--gray-200);
+    color: var(--gray-600);
+    background: white;
+}
+
+.cancelBtn:hover {
+    border-color: rgba(26, 47, 110, 0.3);
+    color: var(--navy);
+}
+
+.confirmBtn {
+    background: var(--navy);
+    color: white;
+}
+
+.confirmBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.confirmBtn:not(:disabled):hover {
+    background: var(--navy-light);
 }
 
 .placeholder,

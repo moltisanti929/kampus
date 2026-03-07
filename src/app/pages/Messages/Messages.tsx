@@ -1,17 +1,30 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, MessageSquare, SendHorizontal } from 'lucide-react'
+import { ArrowLeft, MessageSquare, SendHorizontal, DollarSign, X } from 'lucide-react'
 import { useListings } from '@/app/hooks/useListings'
 import { useAuth } from '@/hooks/useAuth'
 import styles from './Messages.module.css'
 
-interface Message {
+interface BaseMessage {
     id: number
     senderId: string
     senderName: string
-    text: string
     timestamp: number
 }
+
+interface TextMessage extends BaseMessage {
+    kind: 'text'
+    text: string
+}
+
+interface PriceOfferMessage extends BaseMessage {
+    kind: 'price_offer'
+    offerPrice: number
+    commission: number
+    totalAmount: number
+}
+
+type Message = TextMessage | PriceOfferMessage
 
 interface Conversation {
     id: string
@@ -42,9 +55,83 @@ function loadAllConversations() {
     try {
         const raw = localStorage.getItem(GLOBAL_STORAGE_KEY)
         if (!raw) return STARTER_CONVERSATIONS
-        const parsed = JSON.parse(raw) as Conversation[]
+        const parsed = JSON.parse(raw) as unknown
         if (!Array.isArray(parsed)) return STARTER_CONVERSATIONS
-        return parsed
+
+        // Normalize old formats from previous app versions.
+        const normalized: Conversation[] = parsed
+            .map((conversation): Conversation | null => {
+                if (!conversation || typeof conversation !== 'object') return null
+
+                const rawConversation = conversation as Partial<Conversation> & {
+                    messages?: Array<Record<string, unknown>>
+                }
+
+                if (!Array.isArray(rawConversation.messages)) return null
+
+                const seller = rawConversation.seller || 'Seller'
+                const sellerId = rawConversation.sellerId || seller
+                const buyerId = rawConversation.buyerId || 'unknown_buyer'
+                const buyerName = rawConversation.buyerName || 'Buyer'
+                const itemId = typeof rawConversation.itemId === 'number' ? rawConversation.itemId : 0
+                const itemTitle = rawConversation.itemTitle || 'Listing'
+                const updatedAt =
+                    typeof rawConversation.updatedAt === 'number' ? rawConversation.updatedAt : Date.now()
+                const id = rawConversation.id || getConversationId(itemId, sellerId, buyerId)
+
+                const messages: Message[] = rawConversation.messages
+                    .map((message, index): Message | null => {
+                        if (!message || typeof message !== 'object') return null
+                        const senderId = typeof message.senderId === 'string' ? message.senderId : buyerId
+                        const senderName = typeof message.senderName === 'string' ? message.senderName : buyerName
+                        const timestamp =
+                            typeof message.timestamp === 'number' ? message.timestamp : Date.now() + index
+                        const messageId = typeof message.id === 'number' ? message.id : timestamp + index
+
+                        if (
+                            message.kind === 'price_offer' &&
+                            typeof message.offerPrice === 'number' &&
+                            typeof message.commission === 'number' &&
+                            typeof message.totalAmount === 'number'
+                        ) {
+                            return {
+                                id: messageId,
+                                kind: 'price_offer',
+                                senderId,
+                                senderName,
+                                timestamp,
+                                offerPrice: message.offerPrice,
+                                commission: message.commission,
+                                totalAmount: message.totalAmount,
+                            }
+                        }
+
+                        return {
+                            id: messageId,
+                            kind: 'text',
+                            senderId,
+                            senderName,
+                            timestamp,
+                            text: typeof message.text === 'string' ? message.text : '',
+                        }
+                    })
+                    .filter((message): message is Message => message !== null)
+
+                return {
+                    id,
+                    seller,
+                    sellerId,
+                    buyerId,
+                    buyerName,
+                    itemId,
+                    itemTitle,
+                    updatedAt,
+                    messages,
+                }
+            })
+            .filter((conversation): conversation is Conversation => conversation !== null)
+
+        return normalized
     } catch {
         return STARTER_CONVERSATIONS
     }
@@ -57,6 +144,19 @@ function formatTime(timestamp: number) {
     })
 }
 
+function formatMoney(amount: number) {
+    return `₱${amount.toLocaleString('en-PH', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    })}`
+}
+
+function getMessagePreview(message?: Message) {
+    if (!message) return 'Start the chat'
+    if (message.kind === 'price_offer') return `Price offer: ${formatMoney(message.totalAmount)}`
+    return message.text || 'Start the chat'
+}
+
 export default function Messages() {
     const [searchParams] = useSearchParams()
     const navigate = useNavigate()
@@ -66,6 +166,8 @@ export default function Messages() {
     const [allConversations, setAllConversations] = useState<Conversation[]>(loadAllConversations)
     const [activeConversationId, setActiveConversationId] = useState<string>('')
     const [draft, setDraft] = useState('')
+    const [isPriceModalOpen, setIsPriceModalOpen] = useState(false)
+    const [offerInput, setOfferInput] = useState('')
 
     const conversations = useMemo(
         () =>
@@ -90,6 +192,8 @@ export default function Messages() {
             return conversations[0]?.id ?? ''
         })
         setDraft('')
+        setIsPriceModalOpen(false)
+        setOfferInput('')
     }, [conversations])
 
     useEffect(() => {
@@ -134,6 +238,7 @@ export default function Messages() {
                 messages: [
                     {
                         id: now,
+                        kind: 'text',
                         senderId: buyerId,
                         senderName: user.name,
                         text: autoMessage,
@@ -159,6 +264,13 @@ export default function Messages() {
             : activeConversation.seller
         : ''
 
+    const isSellerInConversation =
+        !!activeConversation && activeConversation.sellerId === currentUserKey
+    const offerPrice = Number.parseFloat(offerInput)
+    const isOfferValid = Number.isFinite(offerPrice) && offerPrice > 0
+    const offerCommission = isOfferValid ? offerPrice * 0.1 : 0
+    const offerTotal = isOfferValid ? offerPrice + offerCommission : 0
+
     const handleSend = () => {
         const nextText = draft.trim()
         if (!nextText || !activeConversationId) return
@@ -174,6 +286,7 @@ export default function Messages() {
                         ...conversation.messages,
                         {
                             id: now,
+                            kind: 'text',
                             senderId: currentUserKey,
                             senderName: user?.name || 'Student',
                             text: nextText,
@@ -184,6 +297,37 @@ export default function Messages() {
             })
         )
         setDraft('')
+    }
+
+    const handleSendPriceOffer = () => {
+        if (!activeConversation || !isSellerInConversation || !isOfferValid) return
+
+        const now = Date.now()
+        setAllConversations((prev) =>
+            prev.map((conversation) => {
+                if (conversation.id !== activeConversation.id) return conversation
+                return {
+                    ...conversation,
+                    updatedAt: now,
+                    messages: [
+                        ...conversation.messages,
+                        {
+                            id: now,
+                            kind: 'price_offer',
+                            senderId: currentUserKey,
+                            senderName: user?.name || 'Seller',
+                            offerPrice,
+                            commission: offerCommission,
+                            totalAmount: offerTotal,
+                            timestamp: now,
+                        },
+                    ],
+                }
+            })
+        )
+
+        setIsPriceModalOpen(false)
+        setOfferInput('')
     }
 
     return (
@@ -222,7 +366,7 @@ export default function Messages() {
                                     >
                                         <p className={styles.threadSeller}>{counterpart}</p>
                                         <p className={styles.threadItem}>{conversation.itemTitle}</p>
-                                        <p className={styles.threadPreview}>{lastMessage?.text || 'Start the chat'}</p>
+                                        <p className={styles.threadPreview}>{getMessagePreview(lastMessage)}</p>
                                     </button>
                                 )
                             })}
@@ -255,9 +399,7 @@ export default function Messages() {
                                         <p className={styles.itemCardLabel}>Listing</p>
                                         <p className={styles.itemCardTitle}>{activeConversation.itemTitle}</p>
                                         {activeItem?.price !== undefined && (
-                                            <p className={styles.itemCardPrice}>
-                                                ₱{activeItem.price.toLocaleString('en-PH')}
-                                            </p>
+                                            <p className={styles.itemCardPrice}>₱{activeItem.price.toLocaleString('en-PH')}</p>
                                         )}
                                     </div>
                                 </Link>
@@ -267,15 +409,57 @@ export default function Messages() {
                                 {activeConversation.messages.map((message) => (
                                     <div
                                         key={message.id}
-                                        className={`${styles.messageRow} ${message.senderId === currentUserKey
-                                                ? styles.messageMine
-                                                : styles.messageSeller
+                                        className={`${styles.messageRow} ${message.senderId === currentUserKey ? styles.messageMine : styles.messageSeller
                                             }`}
                                     >
-                                        <div className={styles.messageBubble}>
-                                            <p>{message.text}</p>
-                                            <span>{formatTime(message.timestamp)}</span>
-                                        </div>
+                                        {message.kind === 'price_offer' ? (
+                                            <div className={`${styles.messageBubble} ${styles.offerBubble}`}>
+                                                <p className={styles.offerHeader}>Price Offer</p>
+                                                <div className={styles.offerReceipt}>
+                                                    {activeConversation.buyerId === currentUserKey &&
+                                                        message.senderId === activeConversation.sellerId ? (
+                                                        <div className={`${styles.offerRow} ${styles.offerTotal}`}>
+                                                            <span className={styles.offerLabel}>Total amount</span>
+                                                            <span className={styles.offerValue}>{formatMoney(message.totalAmount)}</span>
+                                                        </div>
+                                                    ) : (
+                                                        <>
+                                                            <div className={styles.offerRow}>
+                                                                <span className={styles.offerLabel}>Item price</span>
+                                                                <span className={styles.offerValue}>{formatMoney(message.offerPrice)}</span>
+                                                            </div>
+                                                            <div className={styles.offerRow}>
+                                                                <span className={styles.offerLabel}>10% commission</span>
+                                                                <span className={styles.offerValue}>{formatMoney(message.commission)}</span>
+                                                            </div>
+                                                            <div className={`${styles.offerRow} ${styles.offerTotal}`}>
+                                                                <span className={styles.offerLabel}>Total</span>
+                                                                <span className={styles.offerValue}>{formatMoney(message.totalAmount)}</span>
+                                                            </div>
+                                                        </>
+                                                    )}
+                                                </div>
+
+                                                {activeConversation.buyerId === currentUserKey &&
+                                                    message.senderId === activeConversation.sellerId ? (
+                                                    <button
+                                                        className={styles.payBtn}
+                                                        onClick={() => alert('Payment flow coming soon.')}
+                                                    >
+                                                        Pay
+                                                    </button>
+                                                ) : (
+                                                    <p className={styles.offerMeta}>Awaiting buyer payment</p>
+                                                )}
+
+                                                <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
+                                            </div>
+                                        ) : (
+                                            <div className={styles.messageBubble}>
+                                                <p>{message.text}</p>
+                                                <span className={styles.messageTime}>{formatTime(message.timestamp)}</span>
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </div>
@@ -289,7 +473,17 @@ export default function Messages() {
                                         if (e.key === 'Enter') handleSend()
                                     }}
                                 />
-                                <button onClick={handleSend} aria-label="Send message">
+                                {isSellerInConversation && (
+                                    <button
+                                        className={styles.priceBtn}
+                                        onClick={() => setIsPriceModalOpen(true)}
+                                        aria-label="Set offer price"
+                                        title="Set offer price"
+                                    >
+                                        <DollarSign size={16} />
+                                    </button>
+                                )}
+                                <button className={styles.sendBtn} onClick={handleSend} aria-label="Send message">
                                     <SendHorizontal size={16} />
                                 </button>
                             </div>
@@ -301,6 +495,54 @@ export default function Messages() {
                     )}
                 </section>
             </div>
+
+            {isPriceModalOpen && (
+                <div className={styles.modalOverlay} onClick={() => setIsPriceModalOpen(false)}>
+                    <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.modalHeader}>
+                            <h3>Set Price Offer</h3>
+                            <button
+                                className={styles.modalClose}
+                                onClick={() => setIsPriceModalOpen(false)}
+                                aria-label="Close price modal"
+                            >
+                                <X size={14} />
+                            </button>
+                        </div>
+
+                        <label className={styles.modalLabel}>Item price</label>
+                        <input
+                            type="number"
+                            min="0"
+                            step="0.01"
+                            value={offerInput}
+                            onChange={(e) => setOfferInput(e.target.value)}
+                            placeholder="Enter amount"
+                            className={styles.modalInput}
+                        />
+
+                        <div className={styles.summaryBox}>
+                            <div className={styles.summaryRow}>
+                                <span>10% commission tax</span>
+                                <span>{formatMoney(offerCommission)}</span>
+                            </div>
+                            <div className={`${styles.summaryRow} ${styles.summaryTotal}`}>
+                                <span>Total amount</span>
+                                <span>{formatMoney(offerTotal)}</span>
+                            </div>
+                        </div>
+
+                        <div className={styles.modalActions}>
+                            <button className={styles.cancelBtn} onClick={() => setIsPriceModalOpen(false)}>
+                                Cancel
+                            </button>
+                            <button className={styles.confirmBtn} onClick={handleSendPriceOffer} disabled={!isOfferValid}>
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
