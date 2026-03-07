@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useListings } from '@/app/hooks/useListings'
 import { useAuth } from '@/hooks/useAuth'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Upload, X, Plus, Info } from 'lucide-react'
-import { CATEGORIES } from '@/data/products'
+import { CATEGORIES, type Condition } from '@/data/products'
 import styles from './CreateListing.module.css'
 
 const CONDITIONS = ['New', 'Like New', 'Good', 'Used']
@@ -14,6 +14,15 @@ const MEETUP_OPTIONS = [
   'Nearby convenience store',
   'To be arranged via chat',
 ]
+
+function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(typeof reader.result === 'string' ? reader.result : '')
+    reader.onerror = () => reject(new Error('Failed to read image file.'))
+    reader.readAsDataURL(file)
+  })
+}
 
 export default function CreateListing() {
   const { addListing } = useListings()
@@ -29,10 +38,19 @@ export default function CreateListing() {
   const [tags, setTags] = useState<string[]>([])
   const [tagInput, setTagInput] = useState('')
 
-  const handlePhotoAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoAdd = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? [])
-    const urls = files.map(f => URL.createObjectURL(f))
-    setPhotos(prev => [...prev, ...urls].slice(0, 5))
+    if (files.length === 0) return
+
+    try {
+      const urls = await Promise.all(files.map(fileToDataUrl))
+      setPhotos(prev => [...prev, ...urls].slice(0, 5))
+    } catch {
+      alert('One or more images could not be processed. Please try again.')
+    } finally {
+      // Let users pick the same file again after a failed/successful upload.
+      e.target.value = ''
+    }
   }
 
   const removePhoto = (i: number) =>
@@ -60,10 +78,12 @@ export default function CreateListing() {
       title,
       price: Number(price),
       image: photos[0] || '',
+      photos,
       category,
       seller: user.name,
-      condition,
-      // Optionally add more fields: description, meetup, tags
+      sellerId: user.id,
+      condition: condition as Condition,
+      description,
     }
     addListing(newListing)
     alert('Listing posted!')
@@ -77,10 +97,10 @@ export default function CreateListing() {
 
       {/* Top bar */}
       <div className={styles.topBar}>
-        <a href="/" className={styles.backBtn}>
+        <Link to="/" className={styles.backBtn}>
           <ArrowLeft size={16} />
           Cancel
-        </a>
+        </Link>
         <h1 className={styles.pageTitle}>Post a Listing</h1>
         <button
           className={`${styles.publishBtn} ${!isValid ? styles.publishBtnDisabled : ''}`}

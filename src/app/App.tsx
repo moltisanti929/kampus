@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { Navbar } from './components/Navbar'
 import { Hero } from './components/Hero'
 import { CategoryBar } from './components/CategoryBar'
@@ -18,8 +19,23 @@ import { RequireAuth } from './components/RequireAuth'
 
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const activeCategory = searchParams.get('category') || 'All'
+  const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'All')
   const searchQuery = searchParams.get('search') || ''
+
+  useEffect(() => {
+    setActiveCategory(searchParams.get('category') || 'All')
+  }, [searchParams])
+
+  const handleCategorySelect = (label: string) => {
+    setActiveCategory(label)
+    const next = new URLSearchParams(searchParams)
+    if (label === 'All') {
+      next.delete('category')
+    } else {
+      next.set('category', label)
+    }
+    setSearchParams(next)
+  }
 
   const { listings } = useListings()
   let allProducts = [...PRODUCTS, ...listings]
@@ -36,7 +52,7 @@ function Home() {
   return (
     <>
       <Hero />
-      <CategoryBar active={activeCategory} />
+      <CategoryBar active={activeCategory} onSelect={handleCategorySelect} />
       <ProductGrid products={allProducts} />
     </>
   )
@@ -56,6 +72,14 @@ export default function App() {
             <Route path="/item/:id" element={<ItemView />} />
             <Route
               path="/profile"
+              element={
+                <RequireAuth onUnauth={() => modal.open('signin')}>
+                  <Profile />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/profile/:profileKey"
               element={
                 <RequireAuth onUnauth={() => modal.open('signin')}>
                   <Profile />

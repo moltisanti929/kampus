@@ -8,6 +8,15 @@ import { useWishlist } from '@/hooks/useWishlist'
 import { useAuth } from '@/hooks/useAuth'
 import styles from './ItemView.module.css'
 
+const FALLBACK_IMAGE = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><rect width="600" height="600" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%239ca3af" font-family="Arial,sans-serif" font-size="24">No image</text></svg>'
+
+function handleImageError(e: React.SyntheticEvent<HTMLImageElement>) {
+  const target = e.currentTarget
+  if (target.src !== FALLBACK_IMAGE) {
+    target.src = FALLBACK_IMAGE
+  }
+}
+
 export default function ItemView() {
   const { user } = useAuth()
   // Helper for posted time
@@ -27,7 +36,12 @@ export default function ItemView() {
   const allProducts = [...PRODUCTS, ...listings]
   const product = allProducts.find(p => p.id === Number(id)) ?? allProducts[0]
   const similar = allProducts.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
-  const sellerListings = allProducts.filter(l => l.seller === product.seller)
+  const sellerListings = allProducts.filter((l) => {
+    if (product.sellerId) {
+      return l.sellerId === product.sellerId
+    }
+    return l.seller === product.seller
+  })
 
   const { toggle, isLiked } = useWishlist()
   const [activeImg, setActiveImg] = useState(0)
@@ -56,7 +70,7 @@ export default function ItemView() {
         {/* ── LEFT: Image Gallery ── */}
         <div className={styles.gallery}>
           <div className={styles.mainImage}>
-            <img src={images[activeImg]} alt={product.title} />
+            <img src={images[activeImg]} alt={product.title} onError={handleImageError} />
 
             {images.length > 1 && (
               <>
@@ -81,7 +95,7 @@ export default function ItemView() {
                 className={`${styles.thumb} ${activeImg === i ? styles.thumbActive : ''}`}
                 onClick={() => setActiveImg(i)}
               >
-                <img src={img} alt={`View ${i + 1}`} />
+                <img src={img} alt={`View ${i + 1}`} onError={handleImageError} />
               </button>
             ))}
           </div>
@@ -166,7 +180,7 @@ export default function ItemView() {
               <p className={styles.sellerName}>{product.seller}</p>
               <p className={styles.sellerMeta}>CIIT Student · {sellerListings.length} active listing{sellerListings.length !== 1 ? 's' : ''}</p>
             </div>
-            <Link to="/profile" className={styles.sellerViewBtn}>View Profile</Link>
+            <Link to={`/profile/${encodeURIComponent(product.sellerId ?? product.seller)}`} className={styles.sellerViewBtn}>View Profile</Link>
           </div>
 
           {/* Safety note */}

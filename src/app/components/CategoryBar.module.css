@@ -2,7 +2,7 @@
   background: white;
   border-bottom: 1px solid var(--gray-200);
   padding: 0 clamp(16px, 4vw, 48px);
-  /* bring above any overlapping hero overlay */
+  /* Keep standard stacking so modal overlays can appear above this bar. */
   position: relative;
   z-index: 10;
   pointer-events: auto;
@@ -39,6 +39,7 @@
   color: var(--gray-600);
   cursor: pointer;
   pointer-events: auto;
+  touch-action: manipulation;
 }
 
 .chip:hover {

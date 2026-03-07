@@ -7,6 +7,7 @@ export interface Product {
   image: string;
   category: string;
   seller: string;
+  sellerId?: string;
   condition?: Condition;
   photos?: string[];
   description?: string;

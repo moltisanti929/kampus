@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, Package, Heart, Settings } from 'lucide-react'
 import { Trash } from 'lucide-react'
 import { ProductCard } from '@/app/components/ProductCard'
@@ -8,8 +8,20 @@ import { useAuth } from '@/hooks/useAuth'
 import { useWishlist } from '@/hooks/useWishlist'
 import styles from './Profile.module.css'
 
-// In a real app: if the profile id matches the logged-in user, show "own" view
-const IS_OWN_PROFILE = true
+interface MockAccount {
+  email: string
+  name: string
+  password: string
+}
+
+const getMockAccounts = (): MockAccount[] => {
+  try {
+    const stored = localStorage.getItem('mock_accounts')
+    return stored ? JSON.parse(stored) : []
+  } catch {
+    return []
+  }
+}
 
 const getInitials = (name: string) => {
   return name
@@ -26,21 +38,44 @@ export default function Profile() {
   const [selectMode, setSelectMode] = useState(false)
   const [selected, setSelected] = useState<number[]>([])
   const { user } = useAuth()
+  const { profileKey } = useParams()
   const { listings, deleteListing } = useListings()
   const [activeTab, setActiveTab] = useState<Tab>('listings')
   const { isLiked, toggle, likedIds } = useWishlist()
-
-  const userListings = listings.filter(l => l.seller === user?.name)
-  const savedListings = listings.filter(l => likedIds.includes(l.id))
 
   if (!user) {
     return <div className={styles.page}>Not logged in</div>
   }
 
+  const key = profileKey ? decodeURIComponent(profileKey) : user.id
+  const accounts = getMockAccounts()
+  const accountById = accounts.find(a => a.email === key)
+  const accountByName = accounts.find(a => a.name === key)
+  const viewedAccount = accountById ?? accountByName
+  const viewedName = viewedAccount?.name ?? (key === user.id ? user.name : key)
+  const viewedEmail = viewedAccount?.email ?? (key === user.id ? user.email : undefined)
+  const isOwnProfile = viewedEmail ? viewedEmail === user.email : viewedName === user.name
+  const userListings = listings.filter((l) => {
+    if (viewedEmail && l.sellerId) {
+      return l.sellerId === viewedEmail
+    }
+    return l.seller === viewedName
+  })
+  const savedListings = listings.filter(l => likedIds.includes(l.id))
+
+  useEffect(() => {
+    // Ensure we never stay on Saved when navigating to another user's profile.
+    if (!isOwnProfile) {
+      setActiveTab('listings')
+      setSelectMode(false)
+      setSelected([])
+    }
+  }, [isOwnProfile])
+
   const profileData = {
-    name: user.name,
-    initials: getInitials(user.name),
-    email: user.email,
+    name: viewedName,
+    initials: getInitials(viewedName),
+    email: viewedEmail,
   }
 
   return (
@@ -52,7 +87,7 @@ export default function Profile() {
           <ArrowLeft size={16} />
           Back to listings
         </Link>
-        {IS_OWN_PROFILE && (
+        {isOwnProfile && (
           <button className={styles.settingsBtn}>
             <Settings size={16} />
             Settings
@@ -64,7 +99,7 @@ export default function Profile() {
       <div className={styles.header}>
         <div className={styles.avatarWrap}>
           <div className={styles.avatar}>{profileData.initials}</div>
-          {IS_OWN_PROFILE && (
+          {isOwnProfile && (
             <button className={styles.editAvatarBtn}>Edit</button>
           )}
         </div>
@@ -74,7 +109,7 @@ export default function Profile() {
             <h1 className={styles.name}>{profileData.name}</h1>
             <span className={styles.profileStat}>{userListings.length} listing{userListings.length !== 1 ? 's' : ''}</span>
           </div>
-          {IS_OWN_PROFILE && (
+          {profileData.email && (
             <p className={styles.email}>{profileData.email}</p>
           )}
         </div>
@@ -87,9 +122,9 @@ export default function Profile() {
           onClick={() => setActiveTab('listings')}
         >
           <Package size={15} />
-          {IS_OWN_PROFILE ? 'My Listings' : 'Listings'}
+          {isOwnProfile ? 'My Listings' : 'Listings'}
         </button>
-        {IS_OWN_PROFILE && (
+        {isOwnProfile && (
           <button
             className={`${styles.tab} ${activeTab === 'saved' ? styles.tabActive : ''}`}
             onClick={() => setActiveTab('saved')}
@@ -104,7 +139,7 @@ export default function Profile() {
       <div className={styles.content}>
         {activeTab === 'listings' && (
           <>
-            {IS_OWN_PROFILE && (
+            {isOwnProfile && (
               <div className={styles.newListingBanner} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                   <p>Got something to sell?</p>
@@ -166,7 +201,7 @@ export default function Profile() {
                 <div className={styles.empty}>
                   <Package size={32} strokeWidth={1.5} />
                   <p>No listings yet.</p>
-                  <Link to="/create-listing">Post a listing</Link>
+                  {isOwnProfile ? <Link to="/create-listing">Post a listing</Link> : <Link to="/">Browse listings</Link>}
                 </div>
               )}
             </div>

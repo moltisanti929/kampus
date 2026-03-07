@@ -1,5 +1,5 @@
 import { Search, User, Plus } from 'lucide-react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '@/hooks/useAuth'
 import type { ModalPanel } from '@/hooks/useModal'
@@ -35,9 +35,9 @@ export function Navbar({ onOpenModal }: NavbarProps) {
     <nav className={styles.nav}>
       <div className={styles.inner}>
         {/* Logo */}
-        <a href="/" className={styles.logo}>
+        <Link to="/" className={styles.logo}>
           Kampus<span className={styles.logoDot}>.</span>
-        </a>
+        </Link>
 
         {/* Search */}
         <div className={styles.searchWrap}>

@@ -1,29 +1,26 @@
 import { CATEGORIES } from '@/data/products'
-import { Link } from 'react-router-dom'
 import styles from './CategoryBar.module.css'
 
 interface CategoryBarProps {
   active: string
+  onSelect: (label: string) => void
 }
 
-// we don't need an onChange prop anymore; each chip is an <a> that updates the
-// search params. the parent can read the active category from `useSearchParams`.
-export function CategoryBar({ active }: CategoryBarProps) {
+export function CategoryBar({ active, onSelect }: CategoryBarProps) {
   return (
     <div className={styles.bar}>
       <div className={styles.inner}>
         {CATEGORIES.map(({ label, icon }) => {
-          const to = label === 'All' ? '/' : `/?category=${encodeURIComponent(label)}`
-
           return (
-            <Link
+            <button
               key={label}
-              to={to}
+              type="button"
               className={`${styles.chip} ${active === label ? styles.active : ''}`}
+              onClick={() => onSelect(label)}
             >
               <span className={styles.icon}>{icon}</span>
               {label}
-            </Link>
+            </button>
           )
         })}
       </div>
